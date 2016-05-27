@@ -14,7 +14,7 @@
   <body>
     <div class="container">
       <header class="header">
-        <h1>BankWeb</h1>
+        <h1><%= link "BankWeb", to: page_path(@conn, :index) %></h1>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
