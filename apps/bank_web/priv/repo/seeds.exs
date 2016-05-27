@@ -1,11 +1,3 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     BankWeb.Repo.insert!(%BankWeb.SomeModel{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+BankWeb.Repo.delete_all(BankWeb.Customer)
+BankWeb.Repo.insert!(%BankWeb.Customer{username: "alice"})
+BankWeb.Repo.insert!(%BankWeb.Customer{username: "bob"})
