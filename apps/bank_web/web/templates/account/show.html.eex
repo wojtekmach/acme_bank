@@ -1,1 +1,1 @@
-Account balance: $0.00
+Account balance: <%= format_money(@balance) %>
