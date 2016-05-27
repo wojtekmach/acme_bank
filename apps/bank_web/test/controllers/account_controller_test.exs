@@ -8,4 +8,9 @@ defmodule BankWeb.AccountControllerTest do
     conn = get conn, "/account"
     assert html_response(conn, 200) =~ "Account balance: $0.00"
   end
+
+  test "unauthenticated", %{conn: conn} do
+    conn = get conn, "/account"
+    assert conn.status == 401
+  end
 end

@@ -1,8 +1,6 @@
 defmodule BankWeb.PageController do
   use BankWeb.Web, :controller
 
-  plug BankWeb.Authentication
-
   def index(conn, _params) do
     customers = BankWeb.Repo.all(BankWeb.Customer)
     render conn, "index.html", customers: customers
