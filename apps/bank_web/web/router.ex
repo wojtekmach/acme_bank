@@ -17,6 +17,9 @@ defmodule BankWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+
+    post "/sign_in_as/:username", SessionController, :sign_in_as
+    delete "/sign_out", SessionController, :sign_out
   end
 
   # Other scopes may use custom stacks.
