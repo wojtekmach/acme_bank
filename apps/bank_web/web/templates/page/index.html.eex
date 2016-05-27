@@ -1,8 +1,6 @@
 <%= if @current_customer do %>
 
-  <p>Signed in as <%= @current_customer.username %>.</p>
-
-	<%= link "Sign out", to: session_path(@conn, :sign_out), method: :delete, class: "btn btn-default" %>
+  <h2>Welcome</h2>
 
 <% else %>
 

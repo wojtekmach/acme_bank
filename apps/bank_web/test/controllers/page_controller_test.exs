@@ -18,7 +18,7 @@ defmodule BankWeb.PageControllerTest do
     conn = get conn, "/"
     assert html_response(conn, 200) =~ "Signed in as alice"
 
-    conn = delete conn, "/sign_out"
+    conn = get conn, "/sign_out"
     assert conn.status == 302
 
     conn = get conn, "/"

@@ -12,11 +12,28 @@
   </head>
 
   <body>
-    <div class="container">
-      <header class="header">
-        <h1><%= link "BankWeb", to: page_path(@conn, :index) %></h1>
-      </header>
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <%= link "BankWeb", to: page_path(@conn, :index), class: "navbar-brand" %>
+        </div>
 
+        <%= if @current_customer do %>
+
+          <ul class="nav navbar-nav">
+            <%= nav_link @conn, "Account", to: account_path(@conn, :show) %>
+          </ul>
+
+          <ul class="nav navbar-nav pull-right">
+            <li><%= link "Signed in as #{@current_customer.username}", to: "" %></li>
+            <li><%= link "Sign out", to: session_path(@conn, :sign_out) %></li>
+          </ul>
+
+        <% end %>
+      </div>
+    </nav>
+
+    <div class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
