@@ -4,6 +4,8 @@ defmodule BankWeb.Customer do
   schema "customers" do
     field :username, :string
 
+    has_one :wallet, BankWeb.Account
+
     timestamps
   end
 
@@ -15,5 +17,10 @@ defmodule BankWeb.Customer do
     |> cast(params, ~w(username)a)
     |> validate_required(~w(username)a)
     |> unique_constraint(:username)
+  end
+
+  def build(%{username: username}) do
+    changeset(%BankWeb.Customer{}, %{username: username})
+    |> put_assoc(:wallet, %BankWeb.Account{name: "Wallet: #{username}"})
   end
 end

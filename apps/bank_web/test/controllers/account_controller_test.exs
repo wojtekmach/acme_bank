@@ -2,7 +2,7 @@ defmodule BankWeb.AccountControllerTest do
   use BankWeb.ConnCase
 
   test "show", %{conn: conn} do
-    alice = BankWeb.Repo.insert!(%BankWeb.Customer{username: "alice"})
+    alice = BankWeb.Customer.build(%{username: "alice"}) |> BankWeb.Repo.insert!
     conn = conn |> assign(:current_customer, alice)
 
     conn = get conn, "/account"

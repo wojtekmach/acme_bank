@@ -6,7 +6,7 @@ defmodule BankWeb.Authentication.Load do
   def call(%{assigns: %{current_customer: %{}}} = conn, _opts), do: conn
   def call(conn, _opts) do
     id = get_session(conn, :customer_id)
-    customer = id && BankWeb.Repo.get!(BankWeb.Customer, id)
+    customer = if id, do: BankWeb.Repo.get!(BankWeb.Customer, id) |> BankWeb.Repo.preload(:wallet)
 
     conn
     |> assign(:current_customer, customer)
