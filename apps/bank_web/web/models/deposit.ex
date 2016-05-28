@@ -5,7 +5,7 @@ defmodule BankWeb.Deposit do
     description = "Deposit"
 
     Ecto.Multi.new
-    |> Ecto.Multi.insert(:debit, debit(BankWeb.Account.deposits_account, description, amount_cents))
+    |> Ecto.Multi.insert(:debit, debit(BankWeb.Ledger.deposits_account, description, amount_cents))
     |> Ecto.Multi.insert(:credit, credit(customer.wallet, description, amount_cents))
   end
 end
