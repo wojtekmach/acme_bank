@@ -9,4 +9,21 @@ defmodule BankWeb.Transaction do
 
     timestamps
   end
+
+  def credit(account, description, amount_cents) do
+    transaction("credit", account, description, amount_cents)
+  end
+
+  def debit(account, description, amount_cents) do
+    transaction("debit", account, description, amount_cents)
+  end
+
+  defp transaction(type, account, description, amount_cents) do
+    %BankWeb.Transaction{
+      type: type,
+      account: account,
+      description: description,
+      amount_cents: amount_cents,
+    }
+  end
 end
