@@ -4,7 +4,10 @@ defmodule BankWeb.AccountController do
   plug BankWeb.Authentication.Require
 
   def show(conn, _params) do
-    balance = BankWeb.Ledger.balance(conn.assigns.current_customer.wallet)
-    render conn, "show.html", balance: balance
+    wallet = conn.assigns.current_customer.wallet
+    balance = BankWeb.Ledger.balance(wallet)
+    transactions = BankWeb.Ledger.transactions(wallet)
+
+    render conn, "show.html", balance: balance, transactions: transactions
   end
 end

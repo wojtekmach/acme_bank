@@ -1,1 +1,24 @@
-Account balance: <%= format_money(@balance) %>
+<h2>Account balance</h2>
+
+<%= format_money(@balance) %>
+
+<h2>Transactions</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th class="col-md-2">Time</th>
+      <th class="col-md-2">Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for transaction <- @transactions do %>
+      <tr>
+        <td><%= transaction.description %></td>
+        <td class="col-md-3"><%= transaction.inserted_at %></td>
+        <td class="col-md-2"><%= format_money(transaction.amount_cents) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

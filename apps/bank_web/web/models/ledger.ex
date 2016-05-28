@@ -14,4 +14,9 @@ defmodule BankWeb.Ledger do
     Repo.get_by(Account, name: "Deposits") ||
       Repo.insert!(%Account{name: "Deposits"})
   end
+
+  def transactions(account) do
+    id = account.id
+    Repo.all(from t in Transaction, where: t.account_id == ^id)
+  end
 end
