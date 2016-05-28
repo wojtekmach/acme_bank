@@ -23,6 +23,9 @@ defmodule BankWeb.Router do
     get "/sign_out", SessionController, :sign_out
 
     get "/account", AccountController, :show
+
+    get "/transfers/new", TransferController, :new
+    post "/transfers", TransferController, :create
   end
 
   # Other scopes may use custom stacks.

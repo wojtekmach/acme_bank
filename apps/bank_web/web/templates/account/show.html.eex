@@ -22,3 +22,5 @@
     <% end %>
   </tbody>
 </table>
+
+<%= link "New transfer", to: transfer_path(@conn, :new), class: "btn btn-default" %>

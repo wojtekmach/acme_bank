@@ -1,0 +1,20 @@
+<h2>New transfer</h2>
+
+<%= form_for @transfer, transfer_path(@conn, :create), fn f -> %>
+  <div>
+    <%= label f, :amount_cents %><br/>
+    <%= text_input f, :amount_cents %>
+    <%= error_tag f, :amount_cents %>
+  </div>
+
+  <div>
+    <%= label f, :destination_account_id, "Account ID" %><br/>
+    <%= text_input f, :destination_account_id %>
+    <%= error_tag f, :destination_account_id %>
+  </div>
+
+  <div>
+    <br/>
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
