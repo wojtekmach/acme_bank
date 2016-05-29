@@ -31,4 +31,25 @@ defmodule BankWeb.Transfer do
     |> Ecto.Multi.insert(:debit, debit(source, description, amount_cents))
     |> Ecto.Multi.insert(:credit, credit(destination, description, amount_cents))
   end
+
+  def create(customer, params) do
+    changeset = changeset(customer, %BankWeb.Transfer{}, params)
+
+    if changeset.valid? do
+      transfer = apply_changes(changeset)
+      source = customer.wallet
+      destination = BankWeb.Repo.get!(BankWeb.Account, transfer.destination_account_id)
+      transactions = build(source, destination, "Transfer", transfer.amount_cents)
+
+      case BankWeb.Ledger.write(transactions) do
+        :ok ->
+          :ok
+        {:error, :insufficient_funds} ->
+          changeset = add_error(changeset, :amount_cents, "insufficient funds")
+          {:error, changeset}
+      end
+    else
+      {:error, changeset}
+    end
+  end
 end
