@@ -15,20 +15,16 @@ defmodule BankWeb.TransferController do
       transfer = Ecto.Changeset.apply_changes(changeset)
       source = conn.assigns.current_customer.wallet
       destination = BankWeb.Repo.get!(BankWeb.Account, transfer.destination_account_id)
-
       transactions = BankWeb.Transfer.build(source, destination, "Transfer", transfer.amount_cents)
-      balances = %{
-        source.id => BankWeb.Ledger.balance(source),
-        destination.id => BankWeb.Ledger.balance(destination),
-      }
 
-      case BankWeb.Simulation.perform(transactions, balances) do
+      case BankWeb.Ledger.write(transactions) do
         :ok ->
-          {:ok, _} = BankWeb.Repo.transaction(transactions)
           redirect conn, to: account_path(conn, :show)
         {:error, :insufficient_funds} ->
-          changeset = %{changeset | action: :transfer}
-          changeset = Ecto.Changeset.add_error(changeset, :amount_cents, "insufficient funds")
+          changeset =
+            changeset
+            |> Map.put(:action, :transfer)
+            |> Ecto.Changeset.add_error(:amount_cents, "insufficient funds")
           render conn, "new.html", transfer: changeset
       end
     else
