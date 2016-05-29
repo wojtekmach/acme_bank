@@ -9,21 +9,31 @@ defmodule BankWeb.TransferController do
   end
 
   def create(conn, %{"transfer" => transfer_params}) do
-    transfer = BankWeb.Transfer.changeset(%BankWeb.Transfer{}, transfer_params)
+    changeset = BankWeb.Transfer.changeset(%BankWeb.Transfer{}, transfer_params)
 
-    if transfer.valid? do
-      transfer = Ecto.Changeset.apply_changes(transfer)
+    if changeset.valid? do
+      transfer = Ecto.Changeset.apply_changes(changeset)
       source = conn.assigns.current_customer.wallet
       destination = BankWeb.Repo.get!(BankWeb.Account, transfer.destination_account_id)
 
-      {:ok, _} =
-        BankWeb.Transfer.build(source, destination, "Transfer", transfer.amount_cents)
-        |> BankWeb.Repo.transaction
+      transactions = BankWeb.Transfer.build(source, destination, "Transfer", transfer.amount_cents)
+      balances = %{
+        source.id => BankWeb.Ledger.balance(source),
+        destination.id => BankWeb.Ledger.balance(destination),
+      }
 
-      redirect conn, to: account_path(conn, :show)
+      case BankWeb.Simulation.perform(transactions, balances) do
+        :ok ->
+          {:ok, _} = BankWeb.Repo.transaction(transactions)
+          redirect conn, to: account_path(conn, :show)
+        {:error, :insufficient_funds} ->
+          changeset = %{changeset | action: :transfer}
+          changeset = Ecto.Changeset.add_error(changeset, :amount_cents, "insufficient funds")
+          render conn, "new.html", transfer: changeset
+      end
     else
-      transfer = %{transfer | action: :transfer}
-      render conn, "new.html", transfer: transfer
+      changeset = %{changeset | action: :transfer}
+      render conn, "new.html", transfer: changeset
     end
   end
 end

@@ -24,4 +24,11 @@ defmodule BankWeb.TransferControllerTest do
     conn = post conn, "/transfers", %{"transfer" => %{amount_cents: "bad"}}
     assert html_response(conn, 200) =~ "is invalid"
   end
+
+  test "create: insufficient funds", %{conn: conn, alice: alice, bob: bob} do
+    conn = post conn, "/transfers", %{"transfer" => %{amount_cents: 999_00, destination_account_id: bob.wallet.id}}
+    assert html_response(conn, 200) =~ "insufficient funds"
+    assert BankWeb.Ledger.balance(alice.wallet) == 10_00
+    assert BankWeb.Ledger.balance(bob.wallet) == 0
+  end
 end
