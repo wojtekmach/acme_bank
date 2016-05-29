@@ -31,4 +31,10 @@ defmodule BankWeb.TransferControllerTest do
     assert BankWeb.Ledger.balance(alice.wallet) == 10_00
     assert BankWeb.Ledger.balance(bob.wallet) == 0
   end
+
+  test "create: cannot transfer to the same account", %{conn: conn, alice: alice} do
+    conn = post conn, "/transfers", %{"transfer" => %{amount_cents: 2_00, destination_account_id: alice.wallet.id}}
+    assert html_response(conn, 200) =~ "cannot transfer to the same account"
+    assert BankWeb.Ledger.balance(alice.wallet) == 10_00
+  end
 end

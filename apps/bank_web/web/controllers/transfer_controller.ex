@@ -4,16 +4,18 @@ defmodule BankWeb.TransferController do
   plug BankWeb.Authentication.Require
 
   def new(conn, _params) do
-    transfer = BankWeb.Transfer.changeset(%BankWeb.Transfer{})
+    customer = conn.assigns.current_customer
+    transfer = BankWeb.Transfer.changeset(customer, %BankWeb.Transfer{})
     render conn, "new.html", transfer: transfer
   end
 
   def create(conn, %{"transfer" => transfer_params}) do
-    changeset = BankWeb.Transfer.changeset(%BankWeb.Transfer{}, transfer_params)
+    customer = conn.assigns.current_customer
+    changeset = BankWeb.Transfer.changeset(customer, %BankWeb.Transfer{}, transfer_params)
 
     if changeset.valid? do
       transfer = Ecto.Changeset.apply_changes(changeset)
-      source = conn.assigns.current_customer.wallet
+      source = customer.wallet
       destination = BankWeb.Repo.get!(BankWeb.Account, transfer.destination_account_id)
       transactions = BankWeb.Transfer.build(source, destination, "Transfer", transfer.amount_cents)
 

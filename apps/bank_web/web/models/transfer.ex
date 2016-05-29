@@ -6,11 +6,22 @@ defmodule BankWeb.Transfer do
     field :destination_account_id, :integer
   end
 
-  def changeset(struct, params \\ %{}) do
+  def changeset(customer, struct, params \\ %{}) do
     struct
     |> cast(params, [:amount_cents, :destination_account_id])
     |> validate_required([:amount_cents, :destination_account_id])
     |> validate_number(:amount_cents, greater_than: 0)
+    |> validate_destination_account(customer)
+  end
+
+  defp validate_destination_account(changeset, customer) do
+    account_id = customer.wallet.id
+    validate_change(changeset, :destination_account_id, fn
+      field, ^account_id ->
+        [{field, {"cannot transfer to the same account", []}}]
+      _, _ ->
+        []
+    end)
   end
 
   def build(source, destination, description, amount_cents) do
