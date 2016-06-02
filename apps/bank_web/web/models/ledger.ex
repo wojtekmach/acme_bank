@@ -3,11 +3,14 @@ defmodule BankWeb.Ledger do
 
   alias BankWeb.{Repo, Account, Transaction}
 
-  def balance(%Account{id: id}) do
-    from(t in Transaction,
-         select: fragment("SUM(CASE WHEN t0.type = 'credit' THEN t0.amount_cents ELSE -t0.amount_cents END)"),
-         where: t.account_id == ^id)
-    |> Repo.one || 0
+  def balance(%Account{id: id, type: type}) do
+    q = from(t in Transaction,
+             select: fragment("SUM(CASE WHEN t0.type = 'credit' THEN t0.amount_cents ELSE -t0.amount_cents END)"),
+             where: t.account_id == ^id)
+
+    balance = Repo.one(q) || 0
+
+    if type == "liability", do: +balance, else: -balance
   end
 
   def deposits_account do

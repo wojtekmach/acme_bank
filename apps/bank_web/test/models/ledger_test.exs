@@ -12,6 +12,23 @@ defmodule BankWed.LedgerTest do
     {:ok, %{alice: alice, bob: bob}}
   end
 
+  test "balance" do
+    asset = Account.build_asset("asset") |> Repo.insert!
+    wallet = Account.build_wallet("wallet") |> Repo.insert!
+
+    assert Ledger.balance(asset) == 0
+    assert Ledger.balance(wallet) == 0
+
+    multi =
+      Ecto.Multi.new
+      |> Ecto.Multi.insert(:debit, debit(asset, "", 10_00))
+      |> Ecto.Multi.insert(:credit, credit(wallet, "", 10_00))
+    {:ok, _} = Repo.transaction(multi)
+
+    assert Ledger.balance(asset) == 10_00
+    assert Ledger.balance(wallet) == 10_00
+  end
+
   test "write: ok", %{alice: alice, bob: bob} do
     multi =
       Ecto.Multi.new
