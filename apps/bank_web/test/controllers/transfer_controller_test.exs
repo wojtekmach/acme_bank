@@ -4,7 +4,7 @@ defmodule BankWeb.TransferControllerTest do
   setup do
     alice = BankWeb.Customer.build(%{username: "alice"}) |> BankWeb.Repo.insert!
     bob = BankWeb.Customer.build(%{username: "bob"}) |> BankWeb.Repo.insert!
-    {:ok, _} = BankWeb.Deposit.build(alice, 10_00) |> BankWeb.Repo.transaction
+    {:ok, _} = BankWeb.Deposit.build(alice, 10_00) |> BankWeb.Ledger.write
 
     conn =
       build_conn()

@@ -3,7 +3,7 @@ defmodule BankWeb.AccountControllerTest do
 
   test "show", %{conn: conn} do
     alice = BankWeb.Customer.build(%{username: "alice"}) |> BankWeb.Repo.insert!
-    {:ok, _} = BankWeb.Deposit.build(alice, 10_00) |> BankWeb.Repo.transaction
+    {:ok, _} = BankWeb.Deposit.build(alice, 10_00) |> BankWeb.Ledger.write
 
     conn = conn |> assign(:current_customer, alice)
 

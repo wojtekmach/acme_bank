@@ -7,7 +7,7 @@ defmodule BankWed.LedgerTest do
     alice = Account.build_wallet("alice") |> Repo.insert!
     bob = Account.build_wallet("bob") |> Repo.insert!
 
-    {:ok, _} = Deposit.build(alice, 100_00) |> Repo.transaction
+    {:ok, _} = Deposit.build(alice, 100_00) |> Ledger.write
 
     {:ok, %{alice: alice, bob: bob}}
   end
