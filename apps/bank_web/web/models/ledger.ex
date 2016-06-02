@@ -20,16 +20,16 @@ defmodule BankWeb.Ledger do
     Repo.all(from t in Transaction, where: t.account_id == ^id)
   end
 
-  def write(transactions) do
+  def write(multi) do
     balances =
-      transactions.operations
+      multi.operations
       |> Enum.map(fn {_, {:changeset, changeset, _}} -> changeset.data.account end)
       |> Enum.uniq
       |> Enum.into(%{}, &{&1.id, balance(&1)})
 
-    case Simulation.perform(transactions, balances) do
+    case Simulation.perform(multi, balances) do
       :ok ->
-        {:ok, _} = Repo.transaction(transactions)
+        {:ok, _} = Repo.transaction(multi)
         :ok
       {:error, _} = error ->
         error
