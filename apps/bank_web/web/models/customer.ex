@@ -21,6 +21,6 @@ defmodule BankWeb.Customer do
 
   def build(%{username: username}) do
     changeset(%BankWeb.Customer{}, %{username: username})
-    |> put_assoc(:wallet, %BankWeb.Account{name: "Wallet: #{username}"})
+    |> put_assoc(:wallet, %BankWeb.Account{name: "Wallet: #{username}", type: "liability"})
   end
 end

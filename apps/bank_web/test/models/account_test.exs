@@ -3,12 +3,10 @@ defmodule BankWeb.AccountTest do
 
   alias BankWeb.Account
 
-  @valid_attrs %{name: "some content"}
+  @valid_attrs %{type: "liability", name: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
-    BankWeb.Repo.insert!(%BankWeb.Account{name: "foo"})
-
     changeset = Account.changeset(%Account{}, @valid_attrs)
     assert changeset.valid?
   end

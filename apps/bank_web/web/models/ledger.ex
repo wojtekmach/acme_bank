@@ -12,7 +12,7 @@ defmodule BankWeb.Ledger do
 
   def deposits_account do
     Repo.get_by(Account, name: "Deposits") ||
-      Repo.insert!(%Account{name: "Deposits"})
+      Repo.insert!(Account.build_asset("Deposits"))
   end
 
   def transactions(account) do

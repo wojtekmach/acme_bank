@@ -4,8 +4,8 @@ defmodule BankWed.LedgerTest do
   import BankWeb.Transaction
 
   setup do
-    alice = Repo.insert!(%Account{name: "alice"})
-    bob = Repo.insert!(%Account{name: "bob"})
+    alice = Account.build_wallet("alice") |> Repo.insert!
+    bob = Account.build_wallet("bob") |> Repo.insert!
 
     {:ok, _} = Deposit.build(alice, 100_00) |> Repo.transaction
 

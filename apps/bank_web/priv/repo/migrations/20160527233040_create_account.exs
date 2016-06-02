@@ -3,7 +3,8 @@ defmodule BankWeb.Repo.Migrations.CreateAccount do
 
   def change do
     create table(:accounts) do
-      add :name, :string
+      add :type, :string, null: false
+      add :name, :string, null: false
       add :customer_id, references(:customers, on_delete: :nothing)
 
       timestamps
