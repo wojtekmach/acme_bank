@@ -1,9 +1,10 @@
 defmodule BankWeb.AccountControllerTest do
   use BankWeb.ConnCase
+  alias BankWeb.{Customer, Deposit, Ledger, Repo}
 
   test "show", %{conn: conn} do
-    alice = BankWeb.Customer.build(%{username: "alice"}) |> BankWeb.Repo.insert!
-    {:ok, _} = BankWeb.Deposit.build(alice, 10_00) |> BankWeb.Ledger.write
+    alice = Customer.build(%{username: "alice"}) |> Repo.insert!
+    {:ok, _} = Deposit.build(alice, 10_00) |> Ledger.write
 
     conn = conn |> assign(:current_customer, alice)
 

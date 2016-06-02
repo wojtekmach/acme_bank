@@ -1,8 +1,9 @@
 defmodule BankWeb.PageControllerTest do
   use BankWeb.ConnCase
+  alias BankWeb.{Customer, Repo}
 
   setup do
-    BankWeb.Customer.build(%{username: "alice"}) |> BankWeb.Repo.insert!
+    Customer.build(%{username: "alice"}) |> Repo.insert!
     :ok
   end
 

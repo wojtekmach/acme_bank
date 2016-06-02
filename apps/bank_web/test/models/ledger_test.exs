@@ -1,7 +1,7 @@
 defmodule BankWed.LedgerTest do
   use BankWeb.ModelCase
   alias BankWeb.{Repo, Account, Deposit, Ledger}
-  import BankWeb.Transaction
+  import BankWeb.Transaction, only: [credit: 3, debit: 3]
 
   setup do
     alice = Account.build_wallet("alice") |> Repo.insert!
