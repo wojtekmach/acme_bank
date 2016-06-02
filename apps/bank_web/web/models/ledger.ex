@@ -1,7 +1,7 @@
 defmodule BankWeb.Ledger do
   import Ecto.Query
 
-  alias BankWeb.{Repo, Account, Transaction, Simulation}
+  alias BankWeb.{Repo, Account, Transaction}
 
   def balance(%Account{id: id}) do
     from(t in Transaction,
@@ -21,18 +21,38 @@ defmodule BankWeb.Ledger do
   end
 
   def write(multi) do
-    balances =
-      multi.operations
-      |> Enum.map(fn {_, {:changeset, changeset, _}} -> changeset.data.account end)
-      |> Enum.uniq
-      |> Enum.into(%{}, &{&1.id, balance(&1)})
+    multi =
+      multi
+      |> Ecto.Multi.run(:credits_equal_debits, &credits_equal_debits/1)
+      |> Ecto.Multi.run(:sufficient_funds, &sufficient_funds/1)
 
-    case Simulation.perform(multi, balances) do
-      :ok ->
-        {:ok, _} = Repo.transaction(multi)
-        :ok
-      {:error, _} = error ->
-        error
+    BankWeb.Repo.transaction(multi)
+  end
+
+  defp credits_equal_debits(_data) do
+    credits = Repo.one!(from(t in Transaction, select: sum(t.amount_cents), where: t.type == "credit"))
+    debits  = Repo.one!(from(t in Transaction, select: sum(t.amount_cents), where: t.type == "debit"))
+
+    if credits == debits do
+      {:ok, 0}
+    else
+      {:error, {credits, debits}}
+    end
+  end
+
+  defp sufficient_funds(data) do
+    balances =
+      Enum.map(data, fn
+        {_, %Transaction{account: account}} -> account
+        _ -> nil
+      end)
+      |> Enum.reject(&is_nil/1)
+      |> Enum.into(%{}, fn account -> {account.id, balance(account)} end)
+
+    if Enum.all?(balances, fn {_, balance} -> balance >= 0 end) do
+      {:ok, balances}
+    else
+      {:error, balances}
     end
   end
 end

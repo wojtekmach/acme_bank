@@ -42,9 +42,9 @@ defmodule BankWeb.Transfer do
       transactions = build(source, destination, "Transfer", transfer.amount_cents)
 
       case BankWeb.Ledger.write(transactions) do
-        :ok ->
+        {:ok, _} ->
           :ok
-        {:error, :insufficient_funds} ->
+        {:error, :sufficient_funds, _, _} ->
           changeset = add_error(changeset, :amount_cents, "insufficient funds")
           {:error, changeset}
       end
