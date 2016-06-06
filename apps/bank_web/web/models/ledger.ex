@@ -29,7 +29,7 @@ defmodule BankWeb.Ledger do
       |> Ecto.Multi.run(:credits_equal_debits, &credits_equal_debits/1)
       |> Ecto.Multi.run(:sufficient_funds, &sufficient_funds/1)
 
-    BankWeb.Repo.transaction(multi)
+    Repo.multi_transaction_with_isolation(multi, :serializable)
   end
 
   defp credits_equal_debits(_data) do

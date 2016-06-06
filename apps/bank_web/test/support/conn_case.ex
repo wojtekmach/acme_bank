@@ -39,6 +39,10 @@ defmodule BankWeb.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(BankWeb.Repo, {:shared, self()})
     end
 
+    if level = tags[:transaction_isolation] do
+      BankWeb.Repo.transaction_isolation(level)
+    end
+
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end
