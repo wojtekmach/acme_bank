@@ -9,9 +9,10 @@ defmodule BankWeb.Ledger do
              where: t.account_id == ^id)
 
     balance = Repo.one(q) || 0
-
-    if type == "liability", do: +balance, else: -balance
+    do_balance(balance, type)
   end
+  defp do_balance(balance, "liability"), do: +balance
+  defp do_balance(balance, "asset"),     do: -balance
 
   def deposits_account do
     Repo.get_by(Account, name: "Deposits") ||
