@@ -45,12 +45,10 @@ defmodule BankWeb.Ledger do
 
   defp sufficient_funds(data) do
     balances =
-      Enum.map(data, fn
-        {_, %Transaction{account: account}} -> account
-        _ -> nil
+      Enum.reduce(data, %{}, fn
+        {_, %Transaction{account: account}}, acc -> Map.put(acc, account.id, balance(account))
+        _, acc -> acc
       end)
-      |> Enum.reject(&is_nil/1)
-      |> Enum.into(%{}, fn account -> {account.id, balance(account)} end)
 
     if Enum.all?(balances, fn {_, balance} -> balance >= 0 end) do
       {:ok, balances}
