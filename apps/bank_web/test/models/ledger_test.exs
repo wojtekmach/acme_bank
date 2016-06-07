@@ -3,6 +3,8 @@ defmodule BankWed.LedgerTest do
   alias BankWeb.{Repo, Account, Deposit, Ledger}
   import BankWeb.Transaction, only: [credit: 3, debit: 3]
 
+  @moduletag transaction_isolation: :serializable
+
   setup _tags do
     alice = Account.build_wallet("alice") |> Repo.insert!
     bob = Account.build_wallet("bob") |> Repo.insert!
@@ -12,7 +14,6 @@ defmodule BankWed.LedgerTest do
     {:ok, %{alice: alice, bob: bob}}
   end
 
-  @tag transaction_isolation: :serializable
   test "balance" do
     asset = Account.build_asset("asset") |> Repo.insert!
     wallet = Account.build_wallet("wallet") |> Repo.insert!
@@ -30,7 +31,6 @@ defmodule BankWed.LedgerTest do
     assert Ledger.balance(wallet) == 10_00
   end
 
-  @tag transaction_isolation: :serializable
   test "write: ok", %{alice: alice, bob: bob} do
     multi =
       Ecto.Multi.new
@@ -40,7 +40,6 @@ defmodule BankWed.LedgerTest do
     assert {:ok, _} = Ledger.write(multi)
   end
 
-  @tag transaction_isolation: :serializable
   test "write: credits not equal debits", %{alice: alice, bob: bob} do
     multi =
       Ecto.Multi.new
@@ -52,7 +51,6 @@ defmodule BankWed.LedgerTest do
     assert Ledger.balance(bob) == 0
   end
 
-  @tag transaction_isolation: :serializable
   test "write: insufficient funds", %{alice: alice, bob: bob} do
     multi =
       Ecto.Multi.new

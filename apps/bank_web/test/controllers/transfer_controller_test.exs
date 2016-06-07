@@ -2,6 +2,8 @@ defmodule BankWeb.TransferControllerTest do
   use BankWeb.ConnCase
   alias BankWeb.{Customer, Deposit, Ledger, Repo}
 
+  @moduletag transaction_isolation: :serializable
+
   setup do
     alice = Customer.build(%{username: "alice"}) |> Repo.insert!
     bob = Customer.build(%{username: "bob"}) |> Repo.insert!
@@ -14,7 +16,6 @@ defmodule BankWeb.TransferControllerTest do
     {:ok, %{conn: conn, alice: alice, bob: bob}}
   end
 
-  @tag transaction_isolation: :serializable
   test "create: success", %{conn: conn, alice: alice, bob: bob} do
     conn = post conn, "/transfers", %{"transfer" => %{amount_cents: 2_00, destination_account_id: bob.wallet.id}}
     assert html_response(conn, 302)
@@ -22,13 +23,11 @@ defmodule BankWeb.TransferControllerTest do
     assert Ledger.balance(bob.wallet) == 2_00
   end
 
-  @tag transaction_isolation: :serializable
   test "create: invalid amount", %{conn: conn} do
     conn = post conn, "/transfers", %{"transfer" => %{amount_cents: "bad"}}
     assert html_response(conn, 200) =~ "is invalid"
   end
 
-  @tag transaction_isolation: :serializable
   test "create: insufficient funds", %{conn: conn, alice: alice, bob: bob} do
     conn = post conn, "/transfers", %{"transfer" => %{amount_cents: 999_00, destination_account_id: bob.wallet.id}}
     assert html_response(conn, 200) =~ "insufficient funds"
@@ -36,7 +35,6 @@ defmodule BankWeb.TransferControllerTest do
     assert Ledger.balance(bob.wallet) == 0
   end
 
-  @tag transaction_isolation: :serializable
   test "create: cannot transfer to the same account", %{conn: conn, alice: alice} do
     conn = post conn, "/transfers", %{"transfer" => %{amount_cents: 2_00, destination_account_id: alice.wallet.id}}
     assert html_response(conn, 200) =~ "cannot transfer to the same account"
