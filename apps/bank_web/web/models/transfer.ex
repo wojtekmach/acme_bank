@@ -3,32 +3,37 @@ defmodule BankWeb.Transfer do
 
   embedded_schema do
     field :amount_cents, :integer
-    field :destination_account_id, :integer
+    field :destination_username, :string
 
-    embeds_one :destination_account, BankWeb.Account
+    embeds_one :destination_customer, BankWeb.Customer
   end
 
   def changeset(customer, struct, params \\ %{}) do
     struct
-    |> cast(params, [:amount_cents, :destination_account_id])
-    |> validate_required([:amount_cents, :destination_account_id])
+    |> cast(params, [:amount_cents, :destination_username])
+    |> validate_required([:amount_cents, :destination_username])
     |> validate_number(:amount_cents, greater_than: 0)
-    |> validate_destination_account(customer)
+    |> validate_destination(customer)
   end
 
-  defp validate_destination_account(changeset, customer) do
-    source_account_id = customer.wallet.id
-    destination_account_id = get_change(changeset, :destination_account_id)
+  defp validate_destination(changeset, customer) do
+    source_username = customer.username
+    destination_username = get_change(changeset, :destination_username)
 
-    if source_account_id == destination_account_id do
-      add_error(changeset, :destination_account_id, "cannot transfer to the same account")
-    else
-      destination = BankWeb.Repo.get_by(BankWeb.Account, id: destination_account_id)
-      if destination do
-        put_embed(changeset, :destination_account, destination)
-      else
-        add_error(changeset, :destination_account_id, "is invalid")
-      end
+    cond do
+      source_username == destination_username ->
+        add_error(changeset, :destination_username, "cannot transfer to the same account")
+      !destination_username ->
+        changeset
+      true ->
+        q = from c in BankWeb.Customer, where: c.username == ^destination_username, preload: :wallet
+        destination = BankWeb.Repo.one(q)
+
+        if destination do
+          put_embed(changeset, :destination_customer, destination)
+        else
+          add_error(changeset, :destination_username, "is invalid")
+        end
     end
   end
 
@@ -38,7 +43,8 @@ defmodule BankWeb.Transfer do
     if changeset.valid? do
       transfer = apply_changes(changeset)
       source_account = customer.wallet
-      transactions = build(source_account, transfer.destination_account, "Transfer", transfer.amount_cents)
+      destination_account = transfer.destination_customer.wallet
+      transactions = build(source_account, destination_account, "Transfer", transfer.amount_cents)
 
       case BankWeb.Ledger.write(transactions) do
         {:ok, _} ->

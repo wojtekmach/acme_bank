@@ -8,9 +8,9 @@
   </div>
 
   <div>
-    <%= label f, :destination_account_id, "Account ID" %><br/>
-    <%= text_input f, :destination_account_id %>
-    <%= error_tag f, :destination_account_id %>
+    <%= label f, :destination_username, "Destination username" %><br/>
+    <%= text_input f, :destination_username %>
+    <%= error_tag f, :destination_username %>
   </div>
 
   <div>

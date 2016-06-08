@@ -14,8 +14,8 @@ defmodule BankWeb.TransferControllerTest do
     {:ok, %{conn: conn, alice: alice, bob: bob}}
   end
 
-  test "create: success", %{conn: conn, bob: bob} do
-    conn = post conn, "/transfers", %{"transfer" => %{amount_cents: 2_00, destination_account_id: bob.wallet.id}}
+  test "create: success", %{conn: conn} do
+    conn = post conn, "/transfers", %{"transfer" => %{amount_cents: 2_00, destination_username: "bob"}}
     assert html_response(conn, 302)
   end
 
