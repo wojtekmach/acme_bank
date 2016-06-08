@@ -24,14 +24,6 @@ defmodule BankWeb.Transfer do
     end)
   end
 
-  def build(source, destination, description, amount_cents) do
-    import BankWeb.Transaction, only: [credit: 3, debit: 3]
-
-    Ecto.Multi.new
-    |> Ecto.Multi.insert(:debit, debit(source, description, amount_cents))
-    |> Ecto.Multi.insert(:credit, credit(destination, description, amount_cents))
-  end
-
   def create(customer, params) do
     changeset = changeset(customer, %BankWeb.Transfer{}, params)
 
@@ -51,5 +43,13 @@ defmodule BankWeb.Transfer do
     else
       {:error, changeset}
     end
+  end
+
+  defp build(source, destination, description, amount_cents) do
+    import BankWeb.Transaction, only: [credit: 3, debit: 3]
+
+    Ecto.Multi.new
+    |> Ecto.Multi.insert(:debit, debit(source, description, amount_cents))
+    |> Ecto.Multi.insert(:credit, credit(destination, description, amount_cents))
   end
 end
