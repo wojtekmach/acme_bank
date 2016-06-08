@@ -4,6 +4,8 @@ defmodule BankWeb.Transfer do
   embedded_schema do
     field :amount_cents, :integer
     field :destination_account_id, :integer
+
+    embeds_one :destination_account, BankWeb.Account
   end
 
   def changeset(customer, struct, params \\ %{}) do
@@ -15,13 +17,19 @@ defmodule BankWeb.Transfer do
   end
 
   defp validate_destination_account(changeset, customer) do
-    account_id = customer.wallet.id
-    validate_change(changeset, :destination_account_id, fn
-      field, ^account_id ->
-        [{field, {"cannot transfer to the same account", []}}]
-      _, _ ->
-        []
-    end)
+    source_account_id = customer.wallet.id
+    destination_account_id = get_change(changeset, :destination_account_id)
+
+    if source_account_id == destination_account_id do
+      add_error(changeset, :destination_account_id, "cannot transfer to the same account")
+    else
+      destination = BankWeb.Repo.get_by(BankWeb.Account, id: destination_account_id)
+      if destination do
+        put_embed(changeset, :destination_account, destination)
+      else
+        add_error(changeset, :destination_account_id, "is invalid")
+      end
+    end
   end
 
   def create(customer, params) do
@@ -29,9 +37,8 @@ defmodule BankWeb.Transfer do
 
     if changeset.valid? do
       transfer = apply_changes(changeset)
-      source = customer.wallet
-      destination = BankWeb.Repo.get!(BankWeb.Account, transfer.destination_account_id)
-      transactions = build(source, destination, "Transfer", transfer.amount_cents)
+      source_account = customer.wallet
+      transactions = build(source_account, transfer.destination_account, "Transfer", transfer.amount_cents)
 
       case BankWeb.Ledger.write(transactions) do
         {:ok, _} ->

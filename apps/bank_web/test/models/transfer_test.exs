@@ -33,7 +33,6 @@ defmodule BankWeb.TransferTest do
            Transfer.create(alice, %{amount_cents: 2_00, destination_account_id: alice.wallet.id})
   end
 
-  @tag :skip
   test "create: invalid destination", %{alice: alice} do
     assert {:error, %{errors: [destination_account_id: {"is invalid", _}]}} =
            Transfer.create(alice, %{amount_cents: 2_00, destination_account_id: 42})
