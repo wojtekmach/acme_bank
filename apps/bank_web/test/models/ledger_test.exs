@@ -1,4 +1,4 @@
-defmodule BankWed.LedgerTest do
+defmodule BankWeb.LedgerTest do
   use BankWeb.ModelCase
   alias BankWeb.{Repo, Account, Deposit, Ledger}
   import BankWeb.Transaction, only: [credit: 3, debit: 3]
