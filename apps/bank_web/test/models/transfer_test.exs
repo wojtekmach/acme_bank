@@ -13,7 +13,7 @@ defmodule BankWeb.TransferTest do
   end
 
   test "create: success", %{alice: alice, bob: bob} do
-    assert Transfer.create(alice, %{amount_cents: 2_00, destination_username: "bob"}) == :ok
+    assert {:ok, _} = Transfer.create(alice, %{amount_cents: 2_00, destination_username: "bob"})
     assert Ledger.balance(alice.wallet) == 8_00
     assert Ledger.balance(bob.wallet) == 2_00
   end

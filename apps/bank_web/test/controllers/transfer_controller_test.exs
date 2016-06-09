@@ -1,10 +1,11 @@
 defmodule BankWeb.TransferControllerTest do
   use BankWeb.ConnCase
-  alias BankWeb.{Customer, Deposit, Ledger, Repo}
+  alias BankWeb.{Customer, Deposit, Ledger, Messenger, Repo}
 
   @moduletag transaction_isolation: :serializable
 
   setup do
+    :ok = Messenger.Test.setup()
     alice = Customer.build(%{username: "alice"}) |> Repo.insert!
     bob = Customer.build(%{username: "bob"}) |> Repo.insert!
     {:ok, _} = Deposit.build(alice, 10_00) |> Ledger.write
@@ -17,6 +18,7 @@ defmodule BankWeb.TransferControllerTest do
   test "create: success", %{conn: conn} do
     conn = post conn, "/transfers", %{"transfer" => %{amount_cents: 2_00, destination_username: "bob"}}
     assert html_response(conn, 302)
+    assert Messenger.Test.subjects_for("bob") == ["You've received $2.00 from alice"]
   end
 
   test "create: invalid amount", %{conn: conn} do

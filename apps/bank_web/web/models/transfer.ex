@@ -5,12 +5,14 @@ defmodule BankWeb.Transfer do
     field :amount_cents, :integer
     field :destination_username, :string
 
+    embeds_one :source_customer, BankWeb.Customer
     embeds_one :destination_customer, BankWeb.Customer
   end
 
   def changeset(customer, struct, params \\ %{}) do
     struct
     |> cast(params, [:amount_cents, :destination_username])
+    |> put_embed(:source_customer, customer)
     |> validate_required([:amount_cents, :destination_username])
     |> validate_number(:amount_cents, greater_than: 0)
     |> validate_destination(customer)
@@ -48,7 +50,7 @@ defmodule BankWeb.Transfer do
 
       case BankWeb.Ledger.write(transactions) do
         {:ok, _} ->
-          :ok
+          {:ok, transfer}
         {:error, :sufficient_funds, _, _} ->
           changeset = add_error(changeset, :amount_cents, "insufficient funds")
           {:error, changeset}
