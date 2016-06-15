@@ -7,7 +7,7 @@ defmodule BankWeb.Transaction do
     field :amount_cents, :integer
     belongs_to :account, BankWeb.Account
 
-    timestamps
+    timestamps()
   end
 
   def credit(account, description, amount_cents) do
