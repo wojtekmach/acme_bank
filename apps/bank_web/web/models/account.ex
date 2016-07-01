@@ -4,17 +4,18 @@ defmodule BankWeb.Account do
   schema "accounts" do
     field :type, :string
     field :name, :string
+    field :currency, :string
     belongs_to :customer, BankWeb.Customer
 
     timestamps
   end
 
   def build_asset(name) do
-    changeset(%BankWeb.Account{}, Map.put(%{type: "asset"}, :name, name))
+    changeset(%BankWeb.Account{}, Map.put(%{type: "asset", currency: "USD"}, :name, name))
   end
 
   def build_wallet(name) do
-    changeset(%BankWeb.Account{}, Map.put(%{type: "liability"}, :name, name))
+    changeset(%BankWeb.Account{}, Map.put(%{type: "liability", currency: "USD"}, :name, name))
   end
 
   @doc """
@@ -22,8 +23,8 @@ defmodule BankWeb.Account do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:type, :name])
-    |> validate_required([:type, :name])
+    |> cast(params, [:type, :name, :currency])
+    |> validate_required([:type, :name, :currency])
     |> unique_constraint(:name)
     |> validate_inclusion(:type, ~w(asset liability))
   end

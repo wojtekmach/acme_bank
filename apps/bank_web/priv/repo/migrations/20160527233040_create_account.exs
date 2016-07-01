@@ -5,6 +5,7 @@ defmodule BankWeb.Repo.Migrations.CreateAccount do
     create table(:accounts) do
       add :type, :string, null: false
       add :name, :string, null: false
+      add :currency, :string, null: false
       add :customer_id, references(:customers, on_delete: :nothing)
 
       timestamps

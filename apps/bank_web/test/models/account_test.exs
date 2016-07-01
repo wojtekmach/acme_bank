@@ -2,7 +2,7 @@ defmodule BankWeb.AccountTest do
   use BankWeb.ModelCase
   alias BankWeb.Account
 
-  @valid_attrs %{type: "liability", name: "some content"}
+  @valid_attrs %{type: "liability", name: "some content", currency: "USD"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

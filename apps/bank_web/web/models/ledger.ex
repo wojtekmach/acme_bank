@@ -3,13 +3,14 @@ defmodule BankWeb.Ledger do
 
   alias BankWeb.{Repo, Account, Transaction}
 
-  def balance(%Account{id: id, type: type}) do
+  def balance(%Account{id: id, type: type, currency: currency}) do
     q = from(t in Transaction,
-             select: fragment("SUM(CASE WHEN t0.type = 'credit' THEN t0.amount_cents ELSE -t0.amount_cents END)"),
+             select: fragment("SUM(CASE WHEN t0.type = 'credit' THEN (t0.amount).cents ELSE -(t0.amount).cents END)"),
              where: t.account_id == ^id)
 
     balance = Repo.one(q) || 0
-    do_balance(balance, type)
+    balance = do_balance(balance, type)
+    %Money{cents: balance, currency: currency}
   end
   defp do_balance(balance, "liability"), do: +balance
   defp do_balance(balance, "asset"),     do: -balance
@@ -33,8 +34,8 @@ defmodule BankWeb.Ledger do
   end
 
   defp credits_equal_debits(_data) do
-    credits = Repo.one!(from(t in Transaction, select: sum(t.amount_cents), where: t.type == "credit"))
-    debits  = Repo.one!(from(t in Transaction, select: sum(t.amount_cents), where: t.type == "debit"))
+    credits = Repo.one!(from(t in Transaction, select: fragment("SUM((t0.amount).cents)"), where: t.type == "credit"))
+    debits  = Repo.one!(from(t in Transaction, select: fragment("SUM((t0.amount).cents)"), where: t.type == "debit"))
 
     if credits == debits do
       {:ok, 0}
@@ -50,7 +51,7 @@ defmodule BankWeb.Ledger do
         _, acc -> acc
       end)
 
-    if Enum.all?(balances, fn {_, balance} -> balance >= 0 end) do
+    if Enum.all?(balances, fn {_, balance} -> balance.cents >= 0 end) do
       {:ok, balances}
     else
       {:error, balances}

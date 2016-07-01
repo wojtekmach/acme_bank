@@ -4,7 +4,7 @@ defmodule BankWeb.Transaction do
   schema "transactions" do
     field :type, :string
     field :description, :string
-    field :amount_cents, :integer
+    field :amount, Money
     belongs_to :account, BankWeb.Account
 
     timestamps()
@@ -23,7 +23,7 @@ defmodule BankWeb.Transaction do
       type: type,
       account: account,
       description: description,
-      amount_cents: amount_cents,
+      amount: amount_cents,
     }
   end
 end

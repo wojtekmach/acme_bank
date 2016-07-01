@@ -46,7 +46,10 @@ defmodule BankWeb.Transfer do
       transfer = apply_changes(changeset)
       source_account = customer.wallet
       destination_account = transfer.destination_customer.wallet
-      transactions = build(source_account, destination_account, "Transfer", transfer.amount_cents)
+      {:ok, _} = ensure_same_currencies(source_account, destination_account)
+
+      amount = %Money{cents: transfer.amount_cents, currency: source_account.currency}
+      transactions = build(source_account, destination_account, "Transfer", amount)
 
       case BankWeb.Ledger.write(transactions) do
         {:ok, _} ->
@@ -60,11 +63,16 @@ defmodule BankWeb.Transfer do
     end
   end
 
-  defp build(source, destination, description, amount_cents) do
+  defp build(source, destination, description, amount) do
     import BankWeb.Transaction, only: [credit: 3, debit: 3]
 
     Ecto.Multi.new
-    |> Ecto.Multi.insert(:debit, debit(source, description, amount_cents))
-    |> Ecto.Multi.insert(:credit, credit(destination, description, amount_cents))
+    |> Ecto.Multi.insert(:debit, debit(source, description, amount))
+    |> Ecto.Multi.insert(:credit, credit(destination, description, amount))
   end
+
+  defp ensure_same_currencies(%BankWeb.Account{currency: c}, %BankWeb.Account{currency: c}),
+    do: {:ok, c}
+  defp ensure_same_currencies(a, b),
+    do: {:error, a.currency, b.currency}
 end
