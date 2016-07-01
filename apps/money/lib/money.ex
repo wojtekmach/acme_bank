@@ -65,9 +65,9 @@ defmodule Money do
 end
 
 defimpl Inspect, for: Money do
-  def inspect(%Money{currency: currency} = money, _opts) do
-    <<_>> <> value = "#{money}"
-    "Money.new(\"#{value} #{currency}\")"
+  def inspect(%Money{currency: "USD"} = money, _opts) do
+    "$" <> value = "#{money}"
+    "Money.new(\"#{value} USD\")"
   end
 end
 
