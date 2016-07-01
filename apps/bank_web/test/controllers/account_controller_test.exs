@@ -11,7 +11,11 @@ defmodule BankWeb.AccountControllerTest do
     conn = conn |> assign(:current_customer, alice)
 
     conn = get conn, "/account"
-    assert html_response(conn, 200) =~ "<h2>Account balance</h2>\n\n$10.00"
+    assert conn.status == 200
+    assert conn.resp_body =~ "<h2>Account balance</h2>\n\n$10.00"
+    assert conn.resp_body =~ "Deposit"
+
+    # TODO: allow custom deposit description and assert it here
   end
 
   test "unauthenticated", %{conn: conn} do
