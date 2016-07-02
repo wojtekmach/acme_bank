@@ -4,19 +4,19 @@ defmodule Money do
 
   ## Examples
 
-      iex> Money.new("10.00 USD").currency
+      iex> ~M"10.00 USD".currency
       "USD"
-      iex> Money.new("10.01 USD").cents
+      iex> ~M"10.01 USD".cents
       1001
 
-      iex> Money.add(Money.new("10 USD"), Money.new("20 USD"))
-      Money.new("30.00 USD")
+      iex> Money.add(~M"10 USD", ~M"20 USD")
+      ~M"30.00 USD"
 
-      iex> "You owe me #{Money.new("10 USD")}"
+      iex> "You owe me #{~M"10 USD"}"
       "You owe me $10.00"
 
-      iex> inspect(Money.new("10 USD"))
-      "Money.new(\"10.00 USD\")"
+      iex> inspect(~M"10 USD")
+      "~M\"10.00 USD\""
 
   """
 
@@ -36,6 +36,10 @@ defmodule Money do
 
     cents = String.to_integer(dollars) * 100 + String.to_integer(cents)
     %Money{cents: cents, currency: currency}
+  end
+
+  def sigil_M(str, _opts) do
+    new(str)
   end
 
   def add(%Money{cents: left_cents, currency: currency},
@@ -70,7 +74,7 @@ end
 defimpl Inspect, for: Money do
   def inspect(%Money{currency: "USD"} = money, _opts) do
     "$" <> value = "#{money}"
-    "Money.new(\"#{value} USD\")"
+    "~M\"#{value} USD\""
   end
 end
 

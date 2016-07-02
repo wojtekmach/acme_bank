@@ -7,15 +7,15 @@ defmodule BankWeb.TransferTest do
   setup do
     alice = Customer.build(%{username: "alice"}) |> Repo.insert!
     bob = Customer.build(%{username: "bob"}) |> Repo.insert!
-    {:ok, _} = Deposit.build(alice, Money.new("10 USD")) |> Ledger.write
+    {:ok, _} = Deposit.build(alice, ~M"10 USD") |> Ledger.write
 
     {:ok, %{alice: alice, bob: bob}}
   end
 
   test "create: success", %{alice: alice, bob: bob} do
     assert {:ok, _} = Transfer.create(alice, %{amount_cents: 2_00, destination_username: "bob"})
-    assert Ledger.balance(alice.wallet) == Money.new("8 USD")
-    assert Ledger.balance(bob.wallet) == Money.new("2 USD")
+    assert Ledger.balance(alice.wallet) == ~M"8 USD"
+    assert Ledger.balance(bob.wallet) == ~M"2 USD"
   end
 
   test "create: invalid amount", %{alice: alice} do

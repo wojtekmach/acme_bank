@@ -22,6 +22,8 @@ defmodule BankWeb.ModelCase do
       import Ecto.Changeset
       import Ecto.Query
       import BankWeb.ModelCase
+
+      import Money, only: [sigil_M: 2]
     end
   end
 

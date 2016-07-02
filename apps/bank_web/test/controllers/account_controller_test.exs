@@ -6,7 +6,7 @@ defmodule BankWeb.AccountControllerTest do
 
   test "show", %{conn: conn} do
     alice = Customer.build(%{username: "alice"}) |> Repo.insert!
-    {:ok, _} = Deposit.build(alice, Money.new("10 USD")) |> Ledger.write
+    {:ok, _} = Deposit.build(alice, ~M"10 USD") |> Ledger.write
 
     conn = conn |> assign(:current_customer, alice)
 

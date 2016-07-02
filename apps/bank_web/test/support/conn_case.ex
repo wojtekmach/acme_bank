@@ -27,6 +27,8 @@ defmodule BankWeb.ConnCase do
 
       import BankWeb.Router.Helpers
 
+      import Money
+
       # The default endpoint for testing
       @endpoint BankWeb.Endpoint
     end
