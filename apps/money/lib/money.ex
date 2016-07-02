@@ -52,8 +52,21 @@ defmodule Money do
     cents = :io_lib.format("~2..0B", [cents]) |> IO.iodata_to_binary
     "$#{dollars}.#{cents}"
   end
+end
 
-  if Code.ensure_loaded?(Ecto.Type) do
+defimpl Inspect, for: Money do
+  def inspect(%Money{currency: "USD"} = money, _opts) do
+    "$" <> value = "#{money}"
+    "~M\"#{value} USD\""
+  end
+end
+
+defimpl String.Chars, for: Money do
+  defdelegate to_string(data), to: Money
+end
+
+if Code.ensure_loaded?(Ecto.Type) do
+  defmodule Money.Ecto do
     @behaviour Ecto.Type
 
     def type, do: :moneyz
@@ -71,17 +84,6 @@ defmodule Money do
     end
     def dump(_), do: :error
   end
-end
-
-defimpl Inspect, for: Money do
-  def inspect(%Money{currency: "USD"} = money, _opts) do
-    "$" <> value = "#{money}"
-    "~M\"#{value} USD\""
-  end
-end
-
-defimpl String.Chars, for: Money do
-  defdelegate to_string(data), to: Money
 end
 
 if Code.ensure_loaded?(Phoenix.HTML.Safe) do

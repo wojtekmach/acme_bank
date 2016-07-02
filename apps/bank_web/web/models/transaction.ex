@@ -4,7 +4,7 @@ defmodule BankWeb.Transaction do
   schema "transactions" do
     field :type, :string
     field :description, :string
-    field :amount, Money
+    field :amount, Money.Ecto
     belongs_to :account, BankWeb.Account
 
     timestamps()
