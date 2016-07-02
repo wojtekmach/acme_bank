@@ -6,8 +6,8 @@ defmodule Money do
 
       iex> Money.new("10.00 USD").currency
       "USD"
-      iex> Money.new("10.00 USD").cents
-      1000
+      iex> Money.new("10.01 USD").cents
+      1001
 
       iex> Money.add(Money.new("10 USD"), Money.new("20 USD"))
       Money.new("30.00 USD")
@@ -23,6 +23,9 @@ defmodule Money do
   defstruct cents: 0, currency: nil
 
   def new(str) when is_binary(str) do
+    # TODO: make sure we don't allow:
+    #       - 10.001 USD
+    #       - 10.00 USDO
     [value, currency] = String.split(str, " ")
 
     {dollars, cents} =
