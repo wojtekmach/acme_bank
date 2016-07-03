@@ -28,7 +28,8 @@ defmodule BankWeb.ModelCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(BankWeb.Repo)
+    opts = if level = tags[:transaction_isolation], do: [isolation: level], else: []
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(BankWeb.Repo, opts)
 
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(BankWeb.Repo, {:shared, self()})
