@@ -7,7 +7,7 @@ defmodule BankWeb.Account do
     field :currency, :string
     belongs_to :customer, BankWeb.Customer
 
-    timestamps
+    timestamps()
   end
 
   def build_asset(name) do

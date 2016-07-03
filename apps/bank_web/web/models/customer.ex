@@ -6,7 +6,7 @@ defmodule BankWeb.Customer do
 
     has_one :wallet, BankWeb.Account
 
-    timestamps
+    timestamps()
   end
 
   @doc """
