@@ -3,7 +3,7 @@ defmodule BankWeb.Repo do
 
   @isolation_levels [:serializable]
 
-  def transaction_isolation(level) when level in @isolation_levels do
+  def isolation(level) when level in @isolation_levels do
     {:ok, _} = Ecto.Adapters.SQL.query(
        BankWeb.Repo,
        "SET TRANSACTION ISOLATION LEVEL #{level}",
@@ -14,7 +14,7 @@ defmodule BankWeb.Repo do
   def multi_transaction_with_isolation(multi, level) do
     result =
       transaction(fn ->
-        transaction_isolation(level)
+        isolation(level)
 
         case transaction(multi) do
           {:ok, _} = result ->

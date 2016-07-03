@@ -2,7 +2,7 @@ defmodule BankWeb.TransferControllerTest do
   use BankWeb.ConnCase
   alias BankWeb.{Customer, Deposit, Ledger, Messenger, Repo}
 
-  @moduletag transaction_isolation: :serializable
+  @moduletag isolation: :serializable
 
   setup do
     :ok = Messenger.Test.setup()

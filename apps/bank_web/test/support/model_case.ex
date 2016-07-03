@@ -28,15 +28,15 @@ defmodule BankWeb.ModelCase do
   end
 
   setup tags do
-    opts = if level = tags[:transaction_isolation], do: [isolation: level], else: []
+    opts = tags |> Map.take([:isolation]) |> Enum.to_list()
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(BankWeb.Repo, opts)
 
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(BankWeb.Repo, {:shared, self()})
     end
 
-    if level = tags[:transaction_isolation] do
-      BankWeb.Repo.transaction_isolation(level)
+    if level = tags[:isolation] do
+      BankWeb.Repo.isolation(level)
     end
 
     :ok

@@ -2,7 +2,7 @@ defmodule BankWeb.TransferTest do
   use BankWeb.ModelCase
   alias BankWeb.{Repo, Customer, Deposit, Ledger, Transfer}
 
-  @moduletag transaction_isolation: :serializable
+  @moduletag isolation: :serializable
 
   setup do
     alice = Customer.build(%{username: "alice"}) |> Repo.insert!

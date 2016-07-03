@@ -3,7 +3,7 @@ defmodule BankWeb.LedgerTest do
   alias BankWeb.{Repo, Account, Deposit, Ledger}
   import BankWeb.Transaction, only: [credit: 3, debit: 3]
 
-  @moduletag transaction_isolation: :serializable
+  @moduletag isolation: :serializable
 
   setup _tags do
     alice = Account.build_wallet("alice") |> Repo.insert!

@@ -2,7 +2,7 @@ defmodule BankWeb.AccountControllerTest do
   use BankWeb.ConnCase
   alias BankWeb.{Customer, Deposit, Ledger, Repo}
 
-  @moduletag transaction_isolation: :serializable
+  @moduletag isolation: :serializable
 
   test "show", %{conn: conn} do
     alice = Customer.build(%{username: "alice"}) |> Repo.insert!
