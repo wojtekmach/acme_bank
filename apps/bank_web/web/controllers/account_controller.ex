@@ -5,8 +5,8 @@ defmodule BankWeb.AccountController do
 
   def show(conn, _params) do
     wallet = conn.assigns.current_customer.wallet
-    balance = Ledger.balance(wallet)
-    transactions = Ledger.transactions(wallet)
+    balance = Bank.balance(wallet)
+    transactions = Bank.transactions(wallet)
 
     render conn, "show.html", balance: balance, transactions: transactions
   end

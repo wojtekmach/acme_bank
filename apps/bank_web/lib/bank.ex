@@ -25,4 +25,9 @@ defmodule Bank do
       |> Ledger.write
     result
   end
+
+  ## Ledger
+
+  defdelegate balance(account), to: Ledger
+  defdelegate transactions(account), to: Ledger
 end
