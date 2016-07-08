@@ -6,6 +6,7 @@
 
 - [BankWeb](apps/bank_web)
 - [Bank](apps/bank)
+- [Messenger](apps/messenger)
 - [Money](apps/money)
 
 ## License
