@@ -1,6 +1,5 @@
 defmodule BankWeb.TransferTest do
   use BankWeb.ModelCase
-  alias BankWeb.{Repo, Customer, Deposit, Ledger, Transfer}
 
   @moduletag isolation: :serializable
 

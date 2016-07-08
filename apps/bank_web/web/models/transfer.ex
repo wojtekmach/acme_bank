@@ -5,8 +5,8 @@ defmodule BankWeb.Transfer do
     field :amount_cents, :integer
     field :destination_username, :string
 
-    embeds_one :source_customer, BankWeb.Customer
-    embeds_one :destination_customer, BankWeb.Customer
+    embeds_one :source_customer, Customer
+    embeds_one :destination_customer, Customer
   end
 
   def changeset(customer, struct, params \\ %{}) do
@@ -28,8 +28,8 @@ defmodule BankWeb.Transfer do
       !destination_username ->
         changeset
       true ->
-        q = from c in BankWeb.Customer, where: c.username == ^destination_username, preload: :wallet
-        destination = BankWeb.Repo.one(q)
+        q = from c in Customer, where: c.username == ^destination_username, preload: :wallet
+        destination = Repo.one(q)
 
         if destination do
           put_embed(changeset, :destination_customer, destination)
@@ -40,7 +40,7 @@ defmodule BankWeb.Transfer do
   end
 
   def create(customer, params) do
-    changeset = changeset(customer, %BankWeb.Transfer{}, params)
+    changeset = changeset(customer, %Transfer{}, params)
 
     if changeset.valid? do
       transfer = apply_changes(changeset)
@@ -51,7 +51,7 @@ defmodule BankWeb.Transfer do
       amount = %Money{cents: transfer.amount_cents, currency: source_account.currency}
       transactions = build(source_account, destination_account, "Transfer", amount)
 
-      case BankWeb.Ledger.write(transactions) do
+      case Ledger.write(transactions) do
         {:ok, _} ->
           {:ok, transfer}
         {:error, :sufficient_funds, _, _} ->
@@ -71,7 +71,7 @@ defmodule BankWeb.Transfer do
     |> Ecto.Multi.insert(:credit, credit(destination, description, amount))
   end
 
-  defp ensure_same_currencies(%BankWeb.Account{currency: c}, %BankWeb.Account{currency: c}),
+  defp ensure_same_currencies(%Account{currency: c}, %Account{currency: c}),
     do: {:ok, c}
   defp ensure_same_currencies(a, b),
     do: {:error, a.currency, b.currency}

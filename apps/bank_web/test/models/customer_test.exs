@@ -1,6 +1,5 @@
 defmodule BankWeb.CustomerTest do
   use BankWeb.ModelCase
-  alias BankWeb.Customer
 
   @valid_attrs %{username: "some content"}
   @invalid_attrs %{}

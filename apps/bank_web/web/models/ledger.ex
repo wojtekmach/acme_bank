@@ -1,7 +1,5 @@
 defmodule BankWeb.Ledger do
-  import Ecto.Query
-
-  alias BankWeb.{Repo, Account, Transaction}
+  use BankWeb.Web, :model
 
   def balance(%Account{id: id, type: type, currency: currency}) do
     q = from(t in Transaction,

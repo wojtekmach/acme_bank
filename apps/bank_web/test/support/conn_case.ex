@@ -27,7 +27,9 @@ defmodule BankWeb.ConnCase do
 
       import BankWeb.Router.Helpers
 
-      import Money
+      import Money, only: [sigil_M: 2]
+      require BankWeb.Web
+      BankWeb.Web.shared
 
       # The default endpoint for testing
       @endpoint BankWeb.Endpoint

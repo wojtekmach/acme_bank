@@ -4,7 +4,7 @@ defmodule BankWeb.Customer do
   schema "customers" do
     field :username, :string
 
-    has_one :wallet, BankWeb.Account
+    has_one :wallet, Account
 
     timestamps()
   end
@@ -20,7 +20,7 @@ defmodule BankWeb.Customer do
   end
 
   def build(%{username: username}) do
-    changeset(%BankWeb.Customer{}, %{username: username})
-    |> put_assoc(:wallet, BankWeb.Account.build_wallet("Wallet: #{username}"))
+    changeset(%Customer{}, %{username: username})
+    |> put_assoc(:wallet, Account.build_wallet("Wallet: #{username}"))
   end
 end

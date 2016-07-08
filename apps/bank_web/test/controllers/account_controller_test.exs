@@ -1,6 +1,5 @@
 defmodule BankWeb.AccountControllerTest do
   use BankWeb.ConnCase
-  alias BankWeb.{Customer, Deposit, Ledger, Repo}
 
   @moduletag isolation: :serializable
 

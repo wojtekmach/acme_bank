@@ -5,17 +5,17 @@ defmodule BankWeb.Account do
     field :type, :string
     field :name, :string
     field :currency, :string
-    belongs_to :customer, BankWeb.Customer
+    belongs_to :customer, Customer
 
     timestamps()
   end
 
   def build_asset(name) do
-    changeset(%BankWeb.Account{}, Map.put(%{type: "asset", currency: "USD"}, :name, name))
+    changeset(%Account{}, Map.put(%{type: "asset", currency: "USD"}, :name, name))
   end
 
   def build_wallet(name) do
-    changeset(%BankWeb.Account{}, Map.put(%{type: "liability", currency: "USD"}, :name, name))
+    changeset(%Account{}, Map.put(%{type: "liability", currency: "USD"}, :name, name))
   end
 
   @doc """

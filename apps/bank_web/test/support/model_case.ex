@@ -24,6 +24,8 @@ defmodule BankWeb.ModelCase do
       import BankWeb.ModelCase
 
       import Money, only: [sigil_M: 2]
+      require BankWeb.Web
+      BankWeb.Web.shared
     end
   end
 

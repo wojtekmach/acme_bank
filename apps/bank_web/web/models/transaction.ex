@@ -5,7 +5,7 @@ defmodule BankWeb.Transaction do
     field :type, :string
     field :description, :string
     field :amount, Money.Ecto
-    belongs_to :account, BankWeb.Account
+    belongs_to :account, Account
 
     timestamps()
   end
@@ -19,7 +19,7 @@ defmodule BankWeb.Transaction do
   end
 
   defp transaction(type, account, description, amount_cents) do
-    %BankWeb.Transaction{
+    %Transaction{
       type: type,
       account: account,
       description: description,

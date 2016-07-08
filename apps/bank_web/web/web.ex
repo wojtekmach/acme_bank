@@ -23,6 +23,8 @@ defmodule BankWeb.Web do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+
+      BankWeb.Web.shared
     end
   end
 
@@ -36,6 +38,8 @@ defmodule BankWeb.Web do
 
       import BankWeb.Router.Helpers
       import BankWeb.Gettext
+
+      BankWeb.Web.shared
     end
   end
 
@@ -69,6 +73,21 @@ defmodule BankWeb.Web do
       import Ecto
       import Ecto.Query
       import BankWeb.Gettext
+    end
+  end
+
+  defmacro shared do
+    quote do
+      alias BankWeb.{
+        Account,
+        Customer,
+        Deposit,
+        Ledger,
+        Messenger,
+        Repo,
+        Transaction,
+        Transfer
+      }
     end
   end
 

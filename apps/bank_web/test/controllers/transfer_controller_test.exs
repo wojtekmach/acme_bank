@@ -1,6 +1,5 @@
 defmodule BankWeb.TransferControllerTest do
   use BankWeb.ConnCase
-  alias BankWeb.{Customer, Deposit, Ledger, Messenger, Repo}
 
   @moduletag isolation: :serializable
 
