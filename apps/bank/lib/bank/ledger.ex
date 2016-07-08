@@ -19,16 +19,16 @@ defmodule Bank.Ledger do
   use Bank.Model
 
   @doc ~S"""
-	Returns account's balance.
-
-	We calculate balance over all account's transaction.
-	Balance increases or decreases are based on `Bank.Account`'s type
-	and `Bank.Transaction`'s type according to this table:
+  Returns account's balance.
+  
+  We calculate balance over all account's transaction.
+  Balance increases or decreases are based on `Bank.Account`'s type
+  and `Bank.Transaction`'s type according to this table:
 	
                 | Debit    | Credit
-			----------|----------|---------
-			Asset     | Increase | Decrease
-			Liability | Decrease | Increase
+      ----------|----------|---------
+      Asset     | Increase | Decrease
+      Liability | Decrease | Increase
 
   """
   def balance(%Account{id: id, type: type, currency: currency}) do
