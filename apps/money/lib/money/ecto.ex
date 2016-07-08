@@ -1,5 +1,43 @@
 if Code.ensure_loaded?(Ecto.Type) do
   defmodule Money.Ecto do
+    @moduledoc ~S"""
+
+    Provides custom Ecto type to use `Money`.
+
+    It might work with different adapters, but it has only been tested
+    on PostgreSQL as a composite type.
+
+    ## Usage:
+    
+    Schema:
+
+        defmodule Item do
+          use Ecto.Schema
+
+          schema "items" do
+            field :name, :string
+            field :price, Money.Ecto
+          end
+        end
+
+    Migration:
+
+        def change do
+          execute "
+            CREATE TYPE moneyz AS (
+              cents integer,
+              currency varchar
+            );
+          "
+
+          create table(:items) do
+            add :name, :string
+            add :price, :moneyz
+          end
+        end
+
+    """
+
     @behaviour Ecto.Type
 
     def type, do: :moneyz

@@ -2,6 +2,8 @@ defmodule Money do
   @moduledoc ~S"""
   Money represents some monetary value (stored in cents) in a given currency.
 
+  See `Money.Ecto` for a custom type implementation that can be used in schemas.
+
   ## Examples
 
       iex> ~M"10.00 USD".currency
@@ -12,8 +14,8 @@ defmodule Money do
       iex> Money.add(~M"10 USD", ~M"20 USD")
       ~M"30.00 USD"
 
-      iex> "You owe me #{~M"10 USD"}"
-      "You owe me $10.00"
+      iex> Kernel.to_string(~M"10 USD")
+      "$10.00"
 
       iex> inspect(~M"10 USD")
       "~M\"10.00 USD\""
