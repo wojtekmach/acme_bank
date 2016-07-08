@@ -5,6 +5,7 @@
 ## Apps
 
 - [BankWeb](apps/bank_web)
+- [Bank](apps/bank)
 - [Money](apps/money)
 
 ## License
