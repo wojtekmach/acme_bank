@@ -13,7 +13,8 @@ defmodule Bank.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases(),
-     deps: deps()]
+     deps: deps(),
+     docs: [main: "Bank"]]
   end
 
   # Configuration for the OTP application
@@ -30,6 +31,7 @@ defmodule Bank.Mixfile do
   defp deps do
     [{:ecto, "~> 2.0"},
      {:postgrex, ">= 0.0.0"},
+     {:ex_doc, ">= 0.0.0", docs: true},
 
      {:money, in_umbrella: true}]
   end

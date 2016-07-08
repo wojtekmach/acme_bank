@@ -1,4 +1,10 @@
 defmodule Bank do
+  @moduledoc ~S"""
+  Contains main business logic of the project.
+
+  See `Bank.Ledger` for a double-entry accounting system implementation.
+  """
+
   use Bank.Model
 
   ## Customers

@@ -1,4 +1,6 @@
 defmodule Bank.Repo do
+  @moduledoc false
+
   use Ecto.Repo, otp_app: :bank
 
   @isolation_levels [:serializable]

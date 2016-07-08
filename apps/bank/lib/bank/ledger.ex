@@ -1,6 +1,36 @@
 defmodule Bank.Ledger do
+  @moduledoc ~S"""
+  A simple implementation of double-entry accounting system.
+
+  Basically, we store every `Bank.Transaction` twice - once for each account affected.
+  Thus, if Alice transfers $10.00 to Bob  we'll have two transactions:
+
+  - debit Alice's account for $10.00
+  - credit Bob's account for $10.00
+
+  `Bank.Transaction` can be a credit or a debit. Depending on `Bank.Account`'s type, a credit
+  can result in the increase (or decrease) of that accounts' balance. See `balance/1`.
+
+	Double-entry accounting system implementation is usually required for compliance with other financial institutions.
+
+  See [Wikipedia entry for more information](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system#Debits_and_credits)
+  """
+
   use Bank.Model
 
+  @doc ~S"""
+	Returns account's balance.
+
+	We calculate balance over all account's transaction.
+	Balance increases or decreases are based on `Bank.Account`'s type
+	and `Bank.Transaction`'s type according to this table:
+	
+                | Debit    | Credit
+			----------|----------|---------
+			Asset     | Increase | Decrease
+			Liability | Decrease | Increase
+
+  """
   def balance(%Account{id: id, type: type, currency: currency}) do
     q = from(t in Transaction,
              select: fragment("SUM(CASE WHEN t0.type = 'credit' THEN (t0.amount).cents ELSE -(t0.amount).cents END)"),
