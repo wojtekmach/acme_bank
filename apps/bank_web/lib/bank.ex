@@ -1,5 +1,5 @@
 defmodule Bank do
-  alias BankWeb.{Customer, Deposit, Ledger, Repo}
+  alias BankWeb.{Customer, Deposit, Ledger, Repo, Transfer}
 
   ## Customers
 
@@ -30,4 +30,14 @@ defmodule Bank do
 
   defdelegate balance(account), to: Ledger
   defdelegate transactions(account), to: Ledger
+
+  ## Transfers
+
+  def build_transfer(customer) do
+    Transfer.changeset(customer, %Transfer{})
+  end
+
+  def create_transfer(customer, params) do
+    Transfer.create(customer, params)
+  end
 end

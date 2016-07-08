@@ -5,14 +5,14 @@ defmodule BankWeb.TransferController do
 
   def new(conn, _params) do
     customer = conn.assigns.current_customer
-    transfer = Transfer.changeset(customer, %Transfer{})
+    transfer = Bank.build_transfer(customer)
     render conn, "new.html", transfer: transfer
   end
 
   def create(conn, %{"transfer" => transfer_params}) do
     customer = conn.assigns.current_customer
 
-    case Transfer.create(customer, transfer_params) do
+    case Bank.create_transfer(customer, transfer_params) do
       {:ok, transfer} ->
         send_message(transfer)
         redirect conn, to: account_path(conn, :show)
