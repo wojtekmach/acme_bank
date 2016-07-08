@@ -2,7 +2,7 @@ defmodule BankWeb.SessionController do
   use BankWeb.Web, :controller
 
   def sign_in_as(conn, %{"username" => username}) do
-		customer = Repo.get_by!(Customer, username: username)
+		customer = Bank.find_customer!(username: username)
 
     conn
     |> put_session(:customer_id, customer.id)
