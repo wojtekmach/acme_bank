@@ -2,7 +2,7 @@ defmodule BankWeb.PageControllerTest do
   use BankWeb.ConnCase
 
   setup do
-    Customer.build(%{username: "alice"}) |> Repo.insert!
+    Bank.create_customer!("alice")
     :ok
   end
 

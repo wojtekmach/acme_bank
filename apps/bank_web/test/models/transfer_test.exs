@@ -4,8 +4,8 @@ defmodule BankWeb.TransferTest do
   @moduletag isolation: :serializable
 
   setup do
-    alice = Customer.build(%{username: "alice"}) |> Repo.insert!
-    bob = Customer.build(%{username: "bob"}) |> Repo.insert!
+    alice = Bank.create_customer!("alice")
+    bob = Bank.create_customer!("bob")
     {:ok, _} = Deposit.build(alice, ~M"10 USD") |> Ledger.write
 
     {:ok, %{alice: alice, bob: bob}}

@@ -4,7 +4,7 @@ defmodule BankWeb.AccountControllerTest do
   @moduletag isolation: :serializable
 
   test "show", %{conn: conn} do
-    alice = Customer.build(%{username: "alice"}) |> Repo.insert!
+    alice = Bank.create_customer!("alice")
     {:ok, _} = Deposit.build(alice, ~M"10 USD") |> Ledger.write
 
     conn = conn |> assign(:current_customer, alice)
