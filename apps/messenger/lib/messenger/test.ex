@@ -1,4 +1,11 @@
 defmodule Messenger.Test do
+  @moduledoc ~S"""
+  Test adapter for `Messenger`.
+
+  Stores messages on the filesystem. Run `setup/0` before each test to
+  ensure clean state.
+  """
+
   @root "tmp/messenger"
 
   def setup do

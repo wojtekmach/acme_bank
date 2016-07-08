@@ -1,4 +1,10 @@
 defmodule Messenger do
+  @moduledoc ~S"""
+  Messenger sends messages.
+
+  For now only `Messenger.Test` adapter is available.
+  """
+
   @type username :: String.t
   @type subject  :: String.t
   @type body     :: String.t
