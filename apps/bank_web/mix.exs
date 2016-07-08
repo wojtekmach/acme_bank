@@ -23,7 +23,7 @@ defmodule BankWeb.Mixfile do
   def application do
     [mod: {BankWeb, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :bank]]
+                    :phoenix_ecto, :postgrex, :bank, :messenger]]
   end
 
   # Specifies which paths to compile per environment.
@@ -43,7 +43,8 @@ defmodule BankWeb.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
 
-     {:bank, in_umbrella: true}]
+     {:bank, in_umbrella: true},
+     {:messenger, in_umbrella: true}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

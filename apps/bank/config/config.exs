@@ -16,7 +16,3 @@ if Mix.env == :test do
   config :bank, Bank.Repo,
     pool: Ecto.Adapters.SQL.Sandbox
 end
-
-## Messenger
-
-config :bank, messenger: Bank.Messenger.Test

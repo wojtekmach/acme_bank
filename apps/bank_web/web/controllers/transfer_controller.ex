@@ -1,6 +1,5 @@
 defmodule BankWeb.TransferController do
   use BankWeb.Web, :controller
-  alias Bank.Messenger
 
   plug BankWeb.Authentication.Require
 

@@ -1,6 +1,5 @@
 defmodule BankWeb.TransferControllerTest do
   use BankWeb.ConnCase
-  alias Bank.Messenger
 
   @moduletag isolation: :serializable
 
