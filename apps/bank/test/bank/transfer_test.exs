@@ -1,5 +1,5 @@
 defmodule BankWeb.TransferTest do
-  use BankWeb.ModelCase
+  use Bank.Case
 
   @moduletag isolation: :serializable
 

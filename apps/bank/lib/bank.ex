@@ -1,5 +1,5 @@
 defmodule Bank do
-  alias BankWeb.{Customer, Deposit, Ledger, Repo, Transfer}
+  use Bank.Model
 
   ## Customers
 

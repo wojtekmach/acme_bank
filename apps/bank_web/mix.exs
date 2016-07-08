@@ -23,7 +23,7 @@ defmodule BankWeb.Mixfile do
   def application do
     [mod: {BankWeb, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :money]]
+                    :phoenix_ecto, :postgrex, :bank]]
   end
 
   # Specifies which paths to compile per environment.
@@ -43,7 +43,7 @@ defmodule BankWeb.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
 
-     {:money, in_umbrella: true}]
+     {:bank, in_umbrella: true}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
@@ -53,9 +53,6 @@ defmodule BankWeb.Mixfile do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-    ["ecto.setup": ["ecto.create", "ecto.migrate", "ecto.seed"],
-     "ecto.seed": ["run priv/repo/seeds.exs"],
-     "ecto.reset": ["ecto.drop", "ecto.setup"],
-     "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
+    []
   end
 end

@@ -1,4 +1,3 @@
 ExUnit.start
 
-Ecto.Adapters.SQL.Sandbox.mode(BankWeb.Repo, :manual)
-
+Ecto.Adapters.SQL.Sandbox.mode(Bank.Repo, :manual)

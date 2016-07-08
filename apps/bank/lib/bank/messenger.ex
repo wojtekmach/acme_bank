@@ -1,16 +1,16 @@
-defmodule BankWeb.Messenger do
+defmodule Bank.Messenger do
   @type username :: String.t
   @type subject  :: String.t
   @type body     :: String.t
 
   @callback send(username, subject, body) :: :ok
 
-  @impl Application.get_env(:bank_web, :messenger)
+  @impl Application.get_env(:bank, :messenger)
 
   defdelegate send(username, subject, body), to: @impl
 end
 
-defmodule BankWeb.Messenger.Test do
+defmodule Bank.Messenger.Test do
   @root "tmp/messenger"
 
   def setup do

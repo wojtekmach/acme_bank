@@ -1,5 +1,5 @@
-defmodule BankWeb.Transfer do
-  use BankWeb.Web, :model
+defmodule Bank.Transfer do
+  use Bank.Model
 
   embedded_schema do
     field :amount_cents, :integer
@@ -64,7 +64,7 @@ defmodule BankWeb.Transfer do
   end
 
   defp build(source, destination, description, amount) do
-    import BankWeb.Transaction, only: [credit: 3, debit: 3]
+    import Transaction, only: [credit: 3, debit: 3]
 
     Ecto.Multi.new
     |> Ecto.Multi.insert(:debit, debit(source, description, amount))

@@ -1,5 +1,5 @@
-defmodule BankWeb.Deposit do
-  use BankWeb.Web, :model
+defmodule Bank.Deposit do
+  use Bank.Model
   import Transaction, only: [credit: 3, debit: 3]
 
   def build(%Customer{wallet: wallet}, %Money{} = amount) do

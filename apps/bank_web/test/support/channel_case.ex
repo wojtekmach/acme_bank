@@ -20,7 +20,7 @@ defmodule BankWeb.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias BankWeb.Repo
+      alias Bank.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
@@ -32,10 +32,10 @@ defmodule BankWeb.ChannelCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(BankWeb.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Bank.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(BankWeb.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Bank.Repo, {:shared, self()})
     end
 
     :ok

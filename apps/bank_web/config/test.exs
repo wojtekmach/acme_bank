@@ -10,7 +10,7 @@ config :bank_web, BankWeb.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :bank_web, BankWeb.Repo,
+config :bank_web, Bank.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",

@@ -16,7 +16,7 @@ defmodule BankWeb.ModelCase do
 
   using do
     quote do
-      alias BankWeb.Repo
+      alias Bank.Repo
 
       import Ecto
       import Ecto.Changeset
@@ -24,22 +24,20 @@ defmodule BankWeb.ModelCase do
       import BankWeb.ModelCase
 
       import Money, only: [sigil_M: 2]
-      require BankWeb.Web
-      BankWeb.Web.shared
     end
   end
 
   setup tags do
     opts = tags |> Map.take([:isolation]) |> Enum.to_list()
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(BankWeb.Repo, opts)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(BankWeb.Repo, {:shared, self()})
-    end
-
-    if level = tags[:isolation] do
-      BankWeb.Repo.isolation(level)
-    end
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Bank.Repo, opts)
+    #
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.Sandbox.mode(Bank.Repo, {:shared, self()})
+    # end
+    #
+    # if level = tags[:isolation] do
+    #   Bank.Repo.isolation(level)
+    # end
 
     :ok
   end

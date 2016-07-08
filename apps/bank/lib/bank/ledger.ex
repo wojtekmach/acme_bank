@@ -1,5 +1,5 @@
-defmodule BankWeb.Ledger do
-  use BankWeb.Web, :model
+defmodule Bank.Ledger do
+  use Bank.Model
 
   def balance(%Account{id: id, type: type, currency: currency}) do
     q = from(t in Transaction,

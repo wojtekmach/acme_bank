@@ -1,5 +1,5 @@
-defmodule BankWeb.Customer do
-  use BankWeb.Web, :model
+defmodule Bank.Customer do
+  use Bank.Model
 
   schema "customers" do
     field :username, :string

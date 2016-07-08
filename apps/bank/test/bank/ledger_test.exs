@@ -1,5 +1,5 @@
 defmodule BankWeb.LedgerTest do
-  use BankWeb.ModelCase
+  use Bank.Case
   import Transaction, only: [credit: 3, debit: 3]
 
   @moduletag isolation: :serializable

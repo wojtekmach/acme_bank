@@ -1,5 +1,5 @@
 defmodule BankWeb.AccountTest do
-  use BankWeb.ModelCase
+  use Bank.Case
 
   @valid_attrs %{type: "liability", name: "some content", currency: "USD"}
   @invalid_attrs %{}

@@ -1,11 +1,11 @@
-defmodule BankWeb.Repo do
-  use Ecto.Repo, otp_app: :bank_web
+defmodule Bank.Repo do
+  use Ecto.Repo, otp_app: :bank
 
   @isolation_levels [:serializable]
 
   def isolation(level) when level in @isolation_levels do
     {:ok, _} = Ecto.Adapters.SQL.query(
-       BankWeb.Repo,
+       Bank.Repo,
        "SET TRANSACTION ISOLATION LEVEL #{level}",
        [])
     :ok

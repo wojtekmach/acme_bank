@@ -8,8 +8,7 @@ defmodule Bank.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
-      # Starts a worker by calling: Bank.Worker.start_link(arg1, arg2, arg3)
-      # worker(Bank.Worker, [arg1, arg2, arg3]),
+      supervisor(Bank.Repo, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

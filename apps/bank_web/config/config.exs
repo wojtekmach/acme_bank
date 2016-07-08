@@ -6,8 +6,7 @@
 use Mix.Config
 
 # General application configuration
-config :bank_web,
-  ecto_repos: [BankWeb.Repo]
+config :bank_web, ecto_repos: []
 
 # Configures the endpoint
 config :bank_web, BankWeb.Endpoint,
@@ -25,5 +24,3 @@ config :logger, :console,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
-
-config :bank_web, messenger: BankWeb.Messenger.Test

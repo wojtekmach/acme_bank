@@ -20,7 +20,7 @@ defmodule BankWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      alias BankWeb.Repo
+      alias Bank.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
@@ -28,8 +28,6 @@ defmodule BankWeb.ConnCase do
       import BankWeb.Router.Helpers
 
       import Money, only: [sigil_M: 2]
-      require BankWeb.Web
-      BankWeb.Web.shared
 
       # The default endpoint for testing
       @endpoint BankWeb.Endpoint
@@ -38,14 +36,14 @@ defmodule BankWeb.ConnCase do
 
   setup tags do
     opts = tags |> Map.take([:isolation]) |> Enum.to_list()
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(BankWeb.Repo, opts)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Bank.Repo, opts)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(BankWeb.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Bank.Repo, {:shared, self()})
     end
-
+    
     if level = tags[:isolation] do
-      BankWeb.Repo.isolation(level)
+      Bank.Repo.isolation(level)
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
