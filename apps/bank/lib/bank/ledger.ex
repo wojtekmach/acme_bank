@@ -11,7 +11,7 @@ defmodule Bank.Ledger do
   `Bank.Transaction` can be a credit or a debit. Depending on `Bank.Account`'s type, a credit
   can result in the increase (or decrease) of that accounts' balance. See `balance/1`.
 
-	Double-entry accounting system implementation is usually required for compliance with other financial institutions.
+  Double-entry accounting system implementation is usually required for compliance with other financial institutions.
 
   See [Wikipedia entry for more information](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system#Debits_and_credits)
   """
