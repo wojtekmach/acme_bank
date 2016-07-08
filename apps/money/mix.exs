@@ -11,7 +11,8 @@ defmodule Money.Mixfile do
      elixir: "~> 1.4-dev",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: deps(),
+     docs: [main: "Money"]]
   end
 
   def application do
@@ -19,6 +20,6 @@ defmodule Money.Mixfile do
   end
 
   defp deps do
-    []
+    [{:ex_doc, ">= 0.0.0", docs: true}]
   end
 end
