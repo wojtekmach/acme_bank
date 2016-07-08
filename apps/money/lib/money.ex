@@ -1,6 +1,6 @@
 defmodule Money do
   @moduledoc ~S"""
-  Money represents some monetary value (stored in cents) in a given currency.
+  `Money` represents some monetary value (stored in cents) in a given currency.
 
   See `Money.Ecto` for a custom type implementation that can be used in schemas.
 
