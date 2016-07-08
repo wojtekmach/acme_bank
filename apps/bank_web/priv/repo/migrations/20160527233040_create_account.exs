@@ -8,7 +8,7 @@ defmodule BankWeb.Repo.Migrations.CreateAccount do
       add :currency, :string, null: false
       add :customer_id, references(:customers, on_delete: :nothing)
 
-      timestamps
+      timestamps()
     end
     create index(:accounts, [:customer_id])
     create index(:accounts, [:name], unique: true)

@@ -15,7 +15,7 @@ defmodule BankWeb.Repo.Migrations.CreateTransaction do
       add :amount, :moneyz
       add :account_id, references(:accounts, on_delete: :nothing)
 
-      timestamps
+      timestamps()
     end
     create index(:transactions, [:account_id])
   end

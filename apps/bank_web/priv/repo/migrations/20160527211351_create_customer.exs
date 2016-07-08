@@ -5,7 +5,7 @@ defmodule BankWeb.Repo.Migrations.CreateCustomer do
     create table(:customers) do
       add :username, :string
 
-      timestamps
+      timestamps()
     end
 
     create index(:customers, [:username], unique: true)
