@@ -6,7 +6,7 @@ defmodule BankWeb.TransferTest do
   setup do
     alice = Bank.create_customer!("alice")
     bob = Bank.create_customer!("bob")
-    {:ok, _} = Deposit.build(alice, ~M"10 USD") |> Ledger.write
+    Bank.create_deposit!(alice, ~M"10 USD")
 
     {:ok, %{alice: alice, bob: bob}}
   end

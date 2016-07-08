@@ -1,5 +1,7 @@
 defmodule Bank do
-  alias BankWeb.{Customer, Repo}
+  alias BankWeb.{Customer, Deposit, Ledger, Repo}
+
+  ## Customers
 
   def create_customer!(username) do
     Customer.build(%{username: username})
@@ -13,5 +15,14 @@ defmodule Bank do
 
   def customers do
     Repo.all(Customer)
+  end
+
+  ## Deposits
+
+  def create_deposit!(account, amount) do
+    {:ok, result} =
+      Deposit.build(account, amount)
+      |> Ledger.write
+    result
   end
 end

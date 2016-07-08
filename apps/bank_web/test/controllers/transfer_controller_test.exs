@@ -7,7 +7,7 @@ defmodule BankWeb.TransferControllerTest do
     :ok = Messenger.Test.setup()
     alice = Bank.create_customer!("alice")
     bob = Bank.create_customer!("bob")
-    {:ok, _} = Deposit.build(alice, ~M"10 USD") |> Ledger.write
+    Bank.create_deposit!(alice, ~M"10 USD")
 
     conn = assign(build_conn(), :current_customer, alice)
 
