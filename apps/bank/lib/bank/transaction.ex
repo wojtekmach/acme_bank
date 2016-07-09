@@ -10,20 +10,14 @@ defmodule Bank.Transaction do
     timestamps()
   end
 
-  def credit(account, description, amount_cents) do
-    transaction("credit", account, description, amount_cents)
-  end
+  def from_tuple({type, %Account{} = account, description, %Money{} = amount})
+      when type in [:credit, :debit] and is_binary(description) do
 
-  def debit(account, description, amount_cents) do
-    transaction("debit", account, description, amount_cents)
-  end
-
-  defp transaction(type, account, description, amount_cents) do
     %Transaction{
-      type: type,
+      type: Atom.to_string(type),
       account: account,
       description: description,
-      amount: amount_cents,
+      amount: amount,
     }
   end
 end

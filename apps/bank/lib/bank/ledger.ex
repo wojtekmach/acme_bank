@@ -52,13 +52,26 @@ defmodule Bank.Ledger do
     Repo.all(from t in Transaction, where: t.account_id == ^id)
   end
 
-  def write(multi) do
-    multi =
-      multi
-      |> Ecto.Multi.run(:credits_equal_debits, &credits_equal_debits/1)
-      |> Ecto.Multi.run(:sufficient_funds, &sufficient_funds/1)
+  def write(transactions) do
+    Repo.transaction(fn ->
+      with {:ok, transactions} <- insert(transactions),
+           :ok <- credits_equal_debits(transactions),
+           :ok <- sufficient_funds(transactions) do
+        transactions
+      else
+        {:error, reason} ->
+          Repo.rollback(reason)
+      end
+    end)
+  end
 
-    Repo.multi_transaction_with_isolation(multi, :serializable)
+  defp insert(transactions) do
+    transactions =
+      Enum.map(transactions, fn tuple ->
+        Transaction.from_tuple(tuple)
+        |> Repo.insert!
+      end)
+    {:ok, transactions}
   end
 
   defp credits_equal_debits(_data) do
@@ -66,23 +79,19 @@ defmodule Bank.Ledger do
     debits  = Repo.one!(from(t in Transaction, select: fragment("SUM((t0.amount).cents)"), where: t.type == "debit"))
 
     if credits == debits do
-      {:ok, 0}
+      :ok
     else
-      {:error, {credits, debits}}
+      {:error, :credits_not_equal_debits}
     end
   end
 
-  defp sufficient_funds(data) do
-    balances =
-      Enum.reduce(data, %{}, fn
-        {_, %Transaction{account: account}}, acc -> Map.put(acc, account.id, balance(account))
-        _, acc -> acc
-      end)
+  defp sufficient_funds(transactions) do
+    accounts = Enum.map(transactions, & &1.account)
 
-    if Enum.all?(balances, fn {_, balance} -> balance.cents >= 0 end) do
-      {:ok, balances}
+    if Enum.all?(accounts, fn account -> balance(account).cents >= 0 end) do
+      :ok
     else
-      {:error, balances}
+      {:error, :insufficient_funds}
     end
   end
 end

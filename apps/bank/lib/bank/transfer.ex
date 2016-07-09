@@ -49,12 +49,12 @@ defmodule Bank.Transfer do
       {:ok, _} = ensure_same_currencies(source_account, destination_account)
 
       amount = %Money{cents: transfer.amount_cents, currency: source_account.currency}
-      transactions = build(source_account, destination_account, "Transfer", amount)
+      transactions = build_transactions(source_account, destination_account, "Transfer", amount)
 
       case Ledger.write(transactions) do
         {:ok, _} ->
           {:ok, transfer}
-        {:error, :sufficient_funds, _, _} ->
+        {:error, :insufficient_funds} ->
           changeset = add_error(changeset, :amount_cents, "insufficient funds")
           {:error, changeset}
       end
@@ -63,12 +63,11 @@ defmodule Bank.Transfer do
     end
   end
 
-  defp build(source, destination, description, amount) do
-    import Transaction, only: [credit: 3, debit: 3]
-
-    Ecto.Multi.new
-    |> Ecto.Multi.insert(:debit, debit(source, description, amount))
-    |> Ecto.Multi.insert(:credit, credit(destination, description, amount))
+  defp build_transactions(source, destination, description, amount) do
+    [
+      {:debit, source, description, amount},
+      {:credit, destination, description, amount},
+    ]
   end
 
   defp ensure_same_currencies(%Account{currency: c}, %Account{currency: c}),
