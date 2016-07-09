@@ -54,7 +54,8 @@ defmodule Bank.Ledger do
 
   def write(transactions) do
     Repo.transaction_with_isolation(fn ->
-      with {:ok, transactions} <- insert(transactions),
+      with :ok <- same_currencies(transactions),
+           {:ok, transactions} <- insert(transactions),
            :ok <- credits_equal_debits(transactions),
            :ok <- sufficient_funds(transactions) do
         transactions
@@ -63,6 +64,18 @@ defmodule Bank.Ledger do
           Repo.rollback(reason)
       end
     end, level: :serializable)
+  end
+
+  defp same_currencies(transactions) do
+    {_, _, _, %Money{currency: currency}} = hd(transactions)
+    currencies =
+      Enum.flat_map(transactions, fn {_, %Account{currency: a}, _, %Money{currency: b}} -> [a, b] end)
+
+    if Enum.uniq(currencies) == [currency] do
+      :ok
+    else
+      {:error, :different_currencies}
+    end
   end
 
   defp insert(transactions) do

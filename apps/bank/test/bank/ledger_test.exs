@@ -24,6 +24,15 @@ defmodule BankWeb.LedgerTest do
     assert Ledger.balance(bob) == ~M"10 USD"
   end
 
+  test "write: different currencies", %{alice: alice, bob: bob} do
+    transactions = [
+      {:debit, alice, "", ~M"10 USD"},
+      {:credit, bob, "", ~M"10 EUR"},
+    ]
+
+    assert {:error, :different_currencies} = Ledger.write(transactions)
+  end
+
   test "write: credits not equal debits", %{alice: alice, bob: bob} do
     transactions = [
       {:debit, alice, "", ~M"10 USD"},

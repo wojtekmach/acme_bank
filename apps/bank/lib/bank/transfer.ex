@@ -46,7 +46,6 @@ defmodule Bank.Transfer do
       transfer = apply_changes(changeset)
       source_account = customer.wallet
       destination_account = transfer.destination_customer.wallet
-      {:ok, _} = ensure_same_currencies(source_account, destination_account)
 
       amount = %Money{cents: transfer.amount_cents, currency: source_account.currency}
       transactions = build_transactions(source_account, destination_account, "Transfer", amount)
@@ -69,9 +68,4 @@ defmodule Bank.Transfer do
       {:credit, destination, description, amount},
     ]
   end
-
-  defp ensure_same_currencies(%Account{currency: c}, %Account{currency: c}),
-    do: {:ok, c}
-  defp ensure_same_currencies(a, b),
-    do: {:error, a.currency, b.currency}
 end
