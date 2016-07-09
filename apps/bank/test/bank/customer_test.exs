@@ -1,4 +1,4 @@
-defmodule BankWeb.CustomerTest do
+defmodule Bank.CustomerTest do
   use Bank.Case
 
   @valid_attrs %{username: "some content"}

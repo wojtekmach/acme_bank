@@ -1,4 +1,4 @@
-defmodule BankWeb.LedgerTest do
+defmodule Bank.LedgerTest do
   use Bank.Case
   # import Transaction, only: [credit: 3, debit: 3]
 

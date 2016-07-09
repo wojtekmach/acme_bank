@@ -1,4 +1,4 @@
-defmodule BankWeb.AccountTest do
+defmodule Bank.AccountTest do
   use Bank.Case
 
   @valid_attrs %{type: "liability", name: "some content", currency: "USD"}

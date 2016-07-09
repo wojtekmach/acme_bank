@@ -1,4 +1,4 @@
-defmodule BankWeb.TransferTest do
+defmodule Bank.TransferTest do
   use Bank.Case
 
   @moduletag isolation: :serializable
