@@ -55,10 +55,10 @@ defmodule Bank.Ledger do
   def write(transactions) do
     Repo.transaction_with_isolation(fn ->
       with :ok <- same_currencies(transactions),
-           {:ok, transactions} <- insert(transactions),
-           :ok <- credits_equal_debits(transactions),
-           :ok <- sufficient_funds(transactions) do
-        transactions
+           {:ok, persisted_transactions} <- insert(transactions),
+           :ok <- credits_equal_debits(),
+           :ok <- sufficient_funds(persisted_transactions) do
+        persisted_transactions
       else
         {:error, reason} ->
           Repo.rollback(reason)
@@ -87,7 +87,7 @@ defmodule Bank.Ledger do
     {:ok, transactions}
   end
 
-  defp credits_equal_debits(_data) do
+  defp credits_equal_debits do
     credits = Repo.one!(from(t in Transaction, select: fragment("SUM((t0.amount).cents)"), where: t.type == "credit"))
     debits  = Repo.one!(from(t in Transaction, select: fragment("SUM((t0.amount).cents)"), where: t.type == "debit"))
 
