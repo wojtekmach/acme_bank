@@ -53,7 +53,7 @@ defmodule Bank.Ledger do
   end
 
   def write(transactions) do
-    Repo.transaction(fn ->
+    Repo.transaction_with_isolation(fn ->
       with {:ok, transactions} <- insert(transactions),
            :ok <- credits_equal_debits(transactions),
            :ok <- sufficient_funds(transactions) do
@@ -62,7 +62,7 @@ defmodule Bank.Ledger do
         {:error, reason} ->
           Repo.rollback(reason)
       end
-    end)
+    end, level: :serializable)
   end
 
   defp insert(transactions) do

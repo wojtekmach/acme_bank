@@ -41,10 +41,6 @@ defmodule BankWeb.ConnCase do
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Bank.Repo, {:shared, self()})
     end
-    
-    if level = tags[:isolation] do
-      Bank.Repo.isolation(level)
-    end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end

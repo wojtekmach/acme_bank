@@ -3,32 +3,21 @@ defmodule Bank.Repo do
 
   use Ecto.Repo, otp_app: :bank
 
-  @isolation_levels [:serializable]
+  def transaction_with_isolation(fun_or_multi, opts) do
+    false = Bank.Repo.in_transaction?
+    level = Keyword.fetch!(opts, :level)
 
-  def isolation(level) when level in @isolation_levels do
-    {:ok, _} = Ecto.Adapters.SQL.query(
-       Bank.Repo,
-       "SET TRANSACTION ISOLATION LEVEL #{level}",
-       [])
-    :ok
+    transaction(fn ->
+      {:ok, _} = Ecto.Adapters.SQL.query(Bank.Repo, "SET TRANSACTION ISOLATION LEVEL #{level}", [])
+
+      case transaction(fun_or_multi, opts) do
+        {:ok, result} -> {:ok, result}
+        {:error, reason} -> Bank.Repo.rollback(reason)
+      end
+      |> unwrap_transaction_result
+    end, opts)
   end
 
-  def multi_transaction_with_isolation(multi, level) do
-    result =
-      transaction(fn ->
-        isolation(level)
-
-        case transaction(multi) do
-          {:ok, _} = result ->
-            result
-          {:error, a, b, c} ->
-            rollback({a, b, c})
-        end
-      end)
-
-    case result do
-      {:ok, _} = result -> result
-      {:error, {a, b, c}} -> {:error, a, b, c}
-    end
-  end
+  defp unwrap_transaction_result({:ok, result}), do: result
+  defp unwrap_transaction_result(other), do: other
 end

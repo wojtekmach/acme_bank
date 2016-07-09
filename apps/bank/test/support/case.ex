@@ -23,10 +23,6 @@ defmodule Bank.Case do
       Ecto.Adapters.SQL.Sandbox.mode(Bank.Repo, {:shared, self()})
     end
 
-    if level = tags[:isolation] do
-      Bank.Repo.isolation(level)
-    end
-
     :ok
   end
 end
