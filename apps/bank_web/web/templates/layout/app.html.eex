@@ -25,7 +25,7 @@
           </ul>
 
           <ul class="nav navbar-nav pull-right">
-            <li><%= link "Signed in as #{@current_customer.username}", to: "" %></li>
+            <li><%= link "Signed in as #{@current_customer.username}", to: account_path(@conn, :show) %></li>
             <li><%= link "Sign out", to: session_path(@conn, :sign_out) %></li>
           </ul>
 
