@@ -17,7 +17,7 @@ defmodule Bank.LedgerTest do
       {:credit, bob, "", ~M"10 USD"},
     ]
 
-    assert {:ok, [%Transaction{}, %Transaction{}]} = Ledger.write(transactions)
+    assert {:ok, [%Entry{}, %Entry{}]} = Ledger.write(transactions)
 
     assert Ledger.balance(alice) == ~M"90 USD"
     assert Ledger.balance(bob) == ~M"10 USD"

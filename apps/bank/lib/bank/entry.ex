@@ -1,7 +1,7 @@
-defmodule Bank.Transaction do
+defmodule Bank.Entry do
   use Bank.Model
 
-  schema "transactions" do
+  schema "entries" do
     field :type, :string
     field :description, :string
     field :amount, Money.Ecto
@@ -13,7 +13,7 @@ defmodule Bank.Transaction do
   def from_tuple({type, %Account{} = account, description, %Money{} = amount})
       when type in [:credit, :debit] and is_binary(description) do
 
-    %Transaction{
+    %Entry{
       type: Atom.to_string(type),
       account: account,
       description: description,

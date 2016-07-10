@@ -35,7 +35,7 @@ defmodule Bank do
   ## Ledger
 
   defdelegate balance(account), to: Ledger
-  defdelegate transactions(account), to: Ledger
+  defdelegate transactions(account), to: Ledger, as: :entries
 
   ## Transfers
 

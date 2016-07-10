@@ -1,3 +1,3 @@
-defmodule Bank.TransactionTest do
+defmodule Bank.EntryTest do
   use Bank.Case
 end

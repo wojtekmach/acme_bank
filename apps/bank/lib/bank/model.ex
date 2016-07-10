@@ -14,7 +14,7 @@ defmodule Bank.Model do
         Ledger,
         Repo,
         Transfer,
-        Transaction
+        Entry
       }
     end
   end

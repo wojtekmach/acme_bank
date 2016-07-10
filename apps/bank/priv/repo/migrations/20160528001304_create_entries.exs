@@ -1,4 +1,4 @@
-defmodule Bank.Repo.Migrations.CreateTransaction do
+defmodule Bank.Repo.Migrations.CreateEntry do
   use Ecto.Migration
 
   def change do
@@ -9,7 +9,7 @@ defmodule Bank.Repo.Migrations.CreateTransaction do
     );
     """
 
-    create table(:transactions) do
+    create table(:entries) do
       add :type, :string
       add :description, :string
       add :amount, :moneyz
@@ -17,6 +17,6 @@ defmodule Bank.Repo.Migrations.CreateTransaction do
 
       timestamps()
     end
-    create index(:transactions, [:account_id])
+    create index(:entries, [:account_id])
   end
 end

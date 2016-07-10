@@ -1,7 +1,9 @@
 use Mix.Config
 
-## Repo
+## Logger
+config :logger, level: :debug
 
+## Repo
 config :bank,
   ecto_repos: [Bank.Repo]
 
