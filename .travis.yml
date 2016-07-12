@@ -5,6 +5,7 @@ sudo: false
 addons:
   postgresql: 9.4
 before_script:
+  - MIX_ENV=test mix deps.compile
   - MIX_ENV=test mix compile
   - MIX_ENV=test mix ecto.create
 script:
