@@ -20,6 +20,8 @@ defmodule Money.Mixfile do
   end
 
   defp deps do
-    [{:ex_doc, ">= 0.0.0", docs: true}]
+    [{:ecto, "~> 2.0", optional: true},
+     {:phoenix_html, "~> 2.6", optional: true},
+     {:ex_doc, ">= 0.0.0", docs: true}]
   end
 end
