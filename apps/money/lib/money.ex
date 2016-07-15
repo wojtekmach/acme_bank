@@ -3,6 +3,10 @@ defmodule Money do
   `Money` represents some monetary value (stored in cents) in a given currency.
 
   See `Money.Ecto` for a custom type implementation that can be used in schemas.
+  
+  In order to use the `~M` sigil, import the module:
+  
+      import Money
 
   ## Examples
 
