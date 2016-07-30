@@ -27,17 +27,26 @@ defmodule Money do
       iex> inspect(~M"10 USD")
       "~M\"10.00 USD\""
 
-      iex> ~M"10.001 USD"
-      ** (ArgumentError) Expected two digits for cents, got: "001"
+      iex> Money.parse("10 USD")
+      {:ok, ~M"10 USD"}
+      iex> Money.parse("10.1 USD")
+      {:error, :invalid_cents}
 
-      iex> ~M"10.00 USDO"
-      ** (ArgumentError) Expected three letter currency, got: "USDO"
+      iex> ~M"10.001 USD"
+      ** (ArgumentError) invalid_cents
 
   """
 
   defstruct cents: 0, currency: nil
 
   def new(str) when is_binary(str) do
+    case parse(str) do
+      {:ok, money} -> money
+      {:error, reason} -> raise ArgumentError, "#{reason}"
+    end
+  end
+
+  def parse(str) when is_binary(str) do
     [value, currency] = String.split(str, " ")
 
     {dollars, cents} =
@@ -46,16 +55,17 @@ defmodule Money do
         [dollars] -> {dollars, "00"}
       end
 
-    if String.length(cents) != 2 do
-      raise ArgumentError, "Expected two digits for cents, got: #{inspect cents}"
-    end
+    cond do
+      String.length(cents) != 2 ->
+        {:error, :invalid_cents}
 
-    if String.length(currency) != 3 do
-      raise ArgumentError, "Expected three letter currency, got: #{inspect currency}"
-    end
+      String.length(currency) != 3 ->
+        {:error, :invalid_currency}
 
-    cents = String.to_integer(dollars) * 100 + String.to_integer(cents)
-    %Money{cents: cents, currency: currency}
+      true ->
+        cents = String.to_integer(dollars) * 100 + String.to_integer(cents)
+        {:ok, %Money{cents: cents, currency: currency}}
+    end
   end
 
   def sigil_M(str, _opts) do
