@@ -10,6 +10,9 @@ defmodule Money do
 
   ## Examples
 
+      iex> Money.new("10.00 USD")
+      ~M"10.00 USD"
+
       iex> ~M"10.00 USD".currency
       "USD"
       iex> ~M"10.01 USD".cents
@@ -24,21 +27,32 @@ defmodule Money do
       iex> inspect(~M"10 USD")
       "~M\"10.00 USD\""
 
+      iex> ~M"10.001 USD"
+      ** (ArgumentError) Expected two digits for cents, got: "001"
+
+      iex> ~M"10.00 USDO"
+      ** (ArgumentError) Expected three letter currency, got: "USDO"
+
   """
 
   defstruct cents: 0, currency: nil
 
   def new(str) when is_binary(str) do
-    # TODO: make sure we don't allow:
-    #       - 10.001 USD
-    #       - 10.00 USDO
     [value, currency] = String.split(str, " ")
 
     {dollars, cents} =
       case String.split(value, ".") do
         [dollars, cents] -> {dollars, cents}
-        [dollars] -> {dollars, "0"}
+        [dollars] -> {dollars, "00"}
       end
+
+    if String.length(cents) != 2 do
+      raise ArgumentError, "Expected two digits for cents, got: #{inspect cents}"
+    end
+
+    if String.length(currency) != 3 do
+      raise ArgumentError, "Expected three letter currency, got: #{inspect currency}"
+    end
 
     cents = String.to_integer(dollars) * 100 + String.to_integer(cents)
     %Money{cents: cents, currency: currency}
