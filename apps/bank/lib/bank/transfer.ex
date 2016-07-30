@@ -5,6 +5,7 @@ defmodule Bank.Transfer do
     field :amount_string, :string
     field :amount, Money.Ecto
     field :destination_username, :string
+    field :description, :string
 
     embeds_one :source_customer, Customer
     embeds_one :destination_customer, Customer
@@ -12,8 +13,8 @@ defmodule Bank.Transfer do
 
   def changeset(customer, struct, params \\ %{}) do
     struct
-    |> cast(params, [:amount_string, :destination_username])
-    |> validate_required([:amount_string, :destination_username])
+    |> cast(params, [:amount_string, :destination_username, :description])
+    |> validate_required([:amount_string, :destination_username, :description])
     |> validate_format(:amount_string, ~r/\d+\.\d{2}/, message: "is invalid")
     |> put_embed(:source_customer, customer)
     |> put_destination_customer(customer)

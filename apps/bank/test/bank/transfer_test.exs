@@ -3,7 +3,7 @@ defmodule Bank.TransferTest do
 
   @moduletag isolation: :serializable
 
-  @valid_params %{amount_string: "2.01", destination_username: "bob"}
+  @valid_params %{amount_string: "2.01", destination_username: "bob", description: "Lunch money"}
 
   setup do
     alice = Bank.create_customer!("alice")

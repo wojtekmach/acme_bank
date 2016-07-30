@@ -15,7 +15,8 @@ defmodule BankWeb.TransferControllerTest do
   end
 
   test "create: success", %{conn: conn} do
-    conn = post conn, "/transfers", %{"transfer" => %{amount_string: "2.01", destination_username: "bob"}}
+    params = %{amount_string: "2.01", destination_username: "bob", description: "Lunch money"}
+    conn = post conn, "/transfers", %{"transfer" => params}
     assert html_response(conn, 302)
     assert Messenger.Test.subjects_for("bob") == ["You've received $2.01 from alice"]
   end

@@ -17,6 +17,12 @@
       </div>
 
       <div class="form-group">
+        <%= label f, :description %><br/>
+        <%= textarea f, :description, class: "form-control" %>
+        <%= error_tag f, :description %>
+      </div>
+
+      <div class="form-group">
         <%= submit "Submit", class: "btn btn-primary" %>
       </div>
     <% end %>
