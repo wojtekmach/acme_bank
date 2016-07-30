@@ -46,7 +46,7 @@ defmodule Bank.Transfer do
 
       amount = Money.new(transfer.amount_string <> " " <> destination_account.currency)
       transfer = %{transfer | amount: amount}
-      transactions = build_transactions(source_account, destination_account, "Transfer", amount)
+      transactions = build_transactions(source_account, destination_account, transfer.description, amount)
 
       case Ledger.write(transactions) do
         {:ok, _} ->

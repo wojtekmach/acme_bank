@@ -17,7 +17,7 @@
       <tr>
         <td><%= transaction.description %></td>
         <td class="col-md-3"><%= transaction.inserted_at %></td>
-        <td class="col-md-2"><%= format_money(transaction.amount) %></td>
+        <td class="col-md-2"><%= format_amount(transaction) %></td>
       </tr>
     <% end %>
   </tbody>
