@@ -34,8 +34,13 @@
     </nav>
 
     <div class="container">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <% if flash = get_flash(@conn, :info) do %>
+        <p class="alert alert-info" role="alert"><%= flash %></p>
+      <% end %>
+
+      <% if flash = get_flash(@conn, :error) do %>
+        <p class="alert alert-danger" role="alert"><%= flash %></p>
+      <% end %>
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
