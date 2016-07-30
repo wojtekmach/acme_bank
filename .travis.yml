@@ -9,3 +9,4 @@ before_script:
   - MIX_ENV=test mix ecto.create
 script:
   - mix test
+  - echo "Re-running tests for each app" ; for app in apps/**; do cd $app && mix test; cd ../.. ; done
