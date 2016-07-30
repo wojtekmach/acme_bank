@@ -15,13 +15,13 @@ defmodule BankWeb.TransferControllerTest do
   end
 
   test "create: success", %{conn: conn} do
-    conn = post conn, "/transfers", %{"transfer" => %{amount_cents: 2_00, destination_username: "bob"}}
+    conn = post conn, "/transfers", %{"transfer" => %{amount_string: "2.01", destination_username: "bob"}}
     assert html_response(conn, 302)
-    assert Messenger.Test.subjects_for("bob") == ["You've received $2.00 from alice"]
+    assert Messenger.Test.subjects_for("bob") == ["You've received $2.01 from alice"]
   end
 
   test "create: invalid amount", %{conn: conn} do
-    conn = post conn, "/transfers", %{"transfer" => %{amount_cents: "bad"}}
+    conn = post conn, "/transfers", %{"transfer" => %{amount_string: "bad"}}
     assert html_response(conn, 200) =~ "is invalid"
   end
 end

@@ -2,9 +2,9 @@
 
 <%= form_for @transfer, transfer_path(@conn, :create), fn f -> %>
   <div>
-    <%= label f, :amount_cents %><br/>
-    <%= text_input f, :amount_cents %>
-    <%= error_tag f, :amount_cents %>
+    <%= label f, :amount_string, "Amount" %><br/>
+    <%= text_input f, :amount_string %>
+    <%= error_tag f, :amount_string %>
   </div>
 
   <div>

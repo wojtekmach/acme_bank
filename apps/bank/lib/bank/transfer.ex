@@ -2,7 +2,8 @@ defmodule Bank.Transfer do
   use Bank.Model
 
   embedded_schema do
-    field :amount_cents, :integer
+    field :amount_string, :string
+    field :amount, Money.Ecto
     field :destination_username, :string
 
     embeds_one :source_customer, Customer
@@ -11,31 +12,26 @@ defmodule Bank.Transfer do
 
   def changeset(customer, struct, params \\ %{}) do
     struct
-    |> cast(params, [:amount_cents, :destination_username])
+    |> cast(params, [:amount_string, :destination_username])
+    |> validate_required([:amount_string, :destination_username])
+    |> validate_format(:amount_string, ~r/\d+\.\d{2}/, message: "is invalid")
     |> put_embed(:source_customer, customer)
-    |> validate_required([:amount_cents, :destination_username])
-    |> validate_number(:amount_cents, greater_than: 0)
-    |> validate_destination(customer)
+    |> put_destination_customer(customer)
   end
 
-  defp validate_destination(changeset, customer) do
-    source_username = customer.username
-    destination_username = get_change(changeset, :destination_username)
+  defp put_destination_customer(%{valid?: false} = changeset, _), do: changeset
+  defp put_destination_customer(changeset, source_customer) do
+    username = get_change(changeset, :destination_username)
 
-    cond do
-      source_username == destination_username ->
-        add_error(changeset, :destination_username, "cannot transfer to the same account")
-      !destination_username ->
-        changeset
-      true ->
-        q = from c in Customer, where: c.username == ^destination_username, preload: :wallet
-        destination = Repo.one(q)
-
-        if destination do
-          put_embed(changeset, :destination_customer, destination)
-        else
+    if username == source_customer.username do
+      add_error(changeset, :destination_username, "cannot transfer to the same account")
+    else
+      case Repo.one(from c in Customer, where: c.username == ^username, preload: :wallet) do
+        %Customer{} = customer ->
+          put_embed(changeset, :destination_customer, customer)
+        nil ->
           add_error(changeset, :destination_username, "is invalid")
-        end
+      end
     end
   end
 
@@ -47,14 +43,15 @@ defmodule Bank.Transfer do
       source_account = customer.wallet
       destination_account = transfer.destination_customer.wallet
 
-      amount = %Money{cents: transfer.amount_cents, currency: source_account.currency}
+      amount = Money.new(transfer.amount_string <> " " <> destination_account.currency)
+      transfer = %{transfer | amount: amount}
       transactions = build_transactions(source_account, destination_account, "Transfer", amount)
 
       case Ledger.write(transactions) do
         {:ok, _} ->
           {:ok, transfer}
         {:error, :insufficient_funds} ->
-          changeset = add_error(changeset, :amount_cents, "insufficient funds")
+          changeset = add_error(changeset, :amount_string, "insufficient funds")
           {:error, changeset}
       end
     else

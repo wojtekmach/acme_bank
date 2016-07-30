@@ -23,8 +23,7 @@ defmodule BankWeb.TransferController do
   end
 
   defp send_message(transfer) do
-    amount = BankWeb.AccountView.format_money(transfer.amount_cents)
-    subject = "You've received #{amount} from #{transfer.source_customer.username}"
+    subject = "You've received #{transfer.amount} from #{transfer.source_customer.username}"
     :ok = Messenger.send(transfer.destination_username, subject, subject)
   end
 end
