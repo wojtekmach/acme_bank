@@ -19,7 +19,7 @@ defmodule Money do
       ~M"30.00 USD"
 
       iex> Kernel.to_string(~M"10 USD")
-      "$10.00"
+      "10.00 USD"
 
       iex> inspect(~M"10 USD")
       "~M\"10.00 USD\""
@@ -53,17 +53,16 @@ defmodule Money do
     %Money{cents: left_cents + right_cents, currency: currency}
   end
 
-  def to_string(%Money{cents: cents, currency: "USD"}) do
+  def to_string(%Money{cents: cents, currency: currency}) do
     {dollars, cents} = {div(cents, 100), rem(cents, 100)}
     cents = :io_lib.format("~2..0B", [cents]) |> IO.iodata_to_binary
-    "$#{dollars}.#{cents}"
+    "#{dollars}.#{cents} #{currency}"
   end
 end
 
 defimpl Inspect, for: Money do
-  def inspect(%Money{currency: "USD"} = money, _opts) do
-    "$" <> value = "#{money}"
-    "~M\"#{value} USD\""
+  def inspect(money, _opts) do
+    "~M\"#{money}\""
   end
 end
 

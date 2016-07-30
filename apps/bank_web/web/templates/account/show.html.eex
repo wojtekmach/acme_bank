@@ -1,6 +1,6 @@
 <h2>Account balance</h2>
 
-<%= @balance %>
+<%= format_money(@balance) %>
 
 <h2>Transactions</h2>
 
@@ -17,7 +17,7 @@
       <tr>
         <td><%= transaction.description %></td>
         <td class="col-md-3"><%= transaction.inserted_at %></td>
-        <td class="col-md-2"><%= transaction.amount %></td>
+        <td class="col-md-2"><%= format_money(transaction.amount) %></td>
       </tr>
     <% end %>
   </tbody>
