@@ -1,6 +1,8 @@
 defmodule Bank.Account do
   use Bank.Model
 
+  @account_types ~w(asset liability)
+
   schema "accounts" do
     field :type, :string
     field :name, :string
@@ -26,6 +28,6 @@ defmodule Bank.Account do
     |> cast(params, [:type, :name, :currency])
     |> validate_required([:type, :name, :currency])
     |> unique_constraint(:name)
-    |> validate_inclusion(:type, ~w(asset liability))
+    |> validate_inclusion(:type, @account_types)
   end
 end
