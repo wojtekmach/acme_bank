@@ -1,5 +1,6 @@
 use Mix.Config
 
+# TODO: rename DB to bank_*
 config :bank, Bank.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",

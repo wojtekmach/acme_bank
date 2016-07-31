@@ -21,7 +21,8 @@ defmodule BankWeb.Authentication.Require do
   def call(%{assigns: %{current_customer: %{}}} = conn, _opts), do: conn
   def call(conn, _opts) do
     conn
-    |> send_resp(401, "Unauthorized")
-    |> halt
+    |> Phoenix.Controller.put_flash(:alert, "You must be signed in to access that page")
+    |> Phoenix.Controller.redirect(to: "/sign_in")
+    |> halt()
   end
 end

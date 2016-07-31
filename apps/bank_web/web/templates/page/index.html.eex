@@ -1,11 +1,1 @@
-<%= if @current_customer do %>
-
-  <h2>Welcome</h2>
-
-<% else %>
-
-  <%= for customer <- @customers do %>
-    <%= link "Sign in as #{customer.username}", to: session_path(@conn, :sign_in_as, customer.username), method: :post, class: "btn btn-default" %>
-  <% end %>
-
-<% end %>
+<h2>Welcome</h2>

@@ -8,20 +8,20 @@ defmodule BankWeb.PageControllerTest do
 
   test "index: unauthenticated", %{conn: conn} do
     conn = get conn, "/"
-    assert html_response(conn, 200) =~ "Sign in as alice"
+    assert html_response(conn, 302) =~ ~r{"/sign_in"}
   end
 
   test "index: authenticated", %{conn: conn} do
     conn = post conn, "/sign_in_as/alice"
-    assert conn.status == 302
+    assert html_response(conn, 302) =~ ~r{"/"}
 
     conn = get conn, "/"
     assert html_response(conn, 200) =~ "Signed in as alice"
 
     conn = get conn, "/sign_out"
-    assert conn.status == 302
+    assert html_response(conn, 302) =~ ~r{"/"}
 
     conn = get conn, "/"
-    assert html_response(conn, 200) =~ "Sign in as alice"
+    assert html_response(conn, 302) =~ ~r{"/sign_in"}
 	end
 end

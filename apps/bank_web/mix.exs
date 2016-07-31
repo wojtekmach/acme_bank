@@ -23,7 +23,7 @@ defmodule BankWeb.Mixfile do
   def application do
     [mod: {BankWeb, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :bank, :messenger]]
+                    :phoenix_ecto, :postgrex, :bank, :messenger, :auth]]
   end
 
   # Specifies which paths to compile per environment.
@@ -44,6 +44,7 @@ defmodule BankWeb.Mixfile do
      {:cowboy, "~> 1.0"},
      {:plug, github: "elixir-lang/plug", override: true},
 
+     {:auth, in_umbrella: true},
      {:bank, in_umbrella: true},
      {:messenger, in_umbrella: true}]
   end

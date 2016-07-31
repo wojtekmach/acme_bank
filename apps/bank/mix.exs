@@ -21,7 +21,7 @@ defmodule Bank.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :ecto, :postgrex, :money],
+    [applications: [:logger, :ecto, :postgrex, :auth, :money],
      mod: {Bank.Application, []}]
   end
 
@@ -33,6 +33,7 @@ defmodule Bank.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:ex_doc, ">= 0.0.0", docs: true},
 
+     {:auth, in_umbrella: true},
      {:money, in_umbrella: true}]
   end
 

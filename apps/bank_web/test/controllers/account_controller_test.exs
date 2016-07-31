@@ -19,6 +19,6 @@ defmodule BankWeb.AccountControllerTest do
 
   test "unauthenticated", %{conn: conn} do
     conn = get conn, "/account"
-    assert conn.status == 401
+    assert conn.status == 302
   end
 end
