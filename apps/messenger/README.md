@@ -1,6 +1,6 @@
 # Messenger
 
-Provides messaging service to the platform.
+Provides messaging services to the platform.
 
 Right now, Messenger is a dummy, stateless service that just stores the messages in the filesystem.
 

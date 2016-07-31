@@ -1,4 +1,4 @@
-defmodule BankUmbrella.Mixfile do
+defmodule BankPlatform.Mixfile do
   use Mix.Project
 
   def project do
