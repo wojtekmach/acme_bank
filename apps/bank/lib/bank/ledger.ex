@@ -18,6 +18,8 @@ defmodule Bank.Ledger do
 
   use Bank.Model
 
+  alias Bank.Ledger.{Account, Entry}
+
   @doc ~S"""
   Returns account's balance.
   

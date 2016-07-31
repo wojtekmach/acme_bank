@@ -1,7 +1,7 @@
 defmodule BankWeb.AccountView do
   use BankWeb.Web, :view
 
-  def format_amount(%Bank.Entry{type: type, amount: amount}) do
+  def format_amount(%Bank.Ledger.Entry{type: type, amount: amount}) do
     sign(type) <> format_money(amount)
   end
 

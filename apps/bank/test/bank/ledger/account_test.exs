@@ -1,5 +1,6 @@
-defmodule Bank.AccountTest do
+defmodule Bank.Ledger.AccountTest do
   use Bank.Case
+  alias Bank.Ledger.Account
 
   @valid_attrs %{type: "liability", name: "some content", currency: "USD"}
   @invalid_attrs %{}

@@ -4,7 +4,7 @@ defmodule Bank.Deposit do
   def build(%Customer{wallet: wallet}, %Money{} = amount) do
     build(wallet, amount)
   end
-  def build(%Account{} = wallet, %Money{} = amount) do
+  def build(%Ledger.Account{} = wallet, %Money{} = amount) do
     description = "Deposit"
 
     [

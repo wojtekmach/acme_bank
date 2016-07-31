@@ -1,4 +1,4 @@
-defmodule Bank.Account do
+defmodule Bank.Ledger.Account do
   use Bank.Model
 
   @account_types ~w(asset liability)
@@ -13,11 +13,11 @@ defmodule Bank.Account do
   end
 
   def build_asset(name) do
-    changeset(%Account{}, Map.put(%{type: "asset", currency: "USD"}, :name, name))
+    changeset(%Ledger.Account{}, Map.put(%{type: "asset", currency: "USD"}, :name, name))
   end
 
   def build_wallet(name) do
-    changeset(%Account{}, Map.put(%{type: "liability", currency: "USD"}, :name, name))
+    changeset(%Ledger.Account{}, Map.put(%{type: "liability", currency: "USD"}, :name, name))
   end
 
   @doc """
