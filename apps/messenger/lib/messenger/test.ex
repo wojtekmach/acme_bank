@@ -14,7 +14,7 @@ defmodule Messenger.Test do
     :ok
   end
 
-  def send(username, subject, body) do
+  def deliver_email(username, subject, body) do
     uniq_id = :erlang.unique_integer()
     File.write!("#{@root}/#{username}-#{uniq_id}", "#{subject}\n\n#{body}")
     :ok
