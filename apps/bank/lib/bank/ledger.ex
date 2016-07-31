@@ -21,6 +21,14 @@ defmodule Bank.Ledger do
   alias Bank.Ledger.{Account, Entry}
 
   @doc ~S"""
+  Creates a wallet account for a given `username`.
+  """
+  def create_wallet!(username) do
+    Account.build_wallet(username)
+    |> Repo.insert!
+  end
+
+  @doc ~S"""
   Returns account's balance.
   
   We calculate balance over all account's entry.

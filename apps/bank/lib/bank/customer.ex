@@ -4,7 +4,7 @@ defmodule Bank.Customer do
   schema "customers" do
     field :username, :string
 
-    has_one :wallet, Ledger.Account
+    belongs_to :wallet, Ledger.Account
 
     timestamps()
   end

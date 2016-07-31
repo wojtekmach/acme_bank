@@ -7,7 +7,6 @@ defmodule Bank.Ledger.Account do
     field :type, :string
     field :name, :string
     field :currency, :string
-    belongs_to :customer, Customer
 
     timestamps()
   end

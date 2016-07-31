@@ -6,11 +6,9 @@ defmodule Bank.Repo.Migrations.CreateAccount do
       add :type, :string, null: false
       add :name, :string, null: false
       add :currency, :string, null: false
-      add :customer_id, references(:customers, on_delete: :nothing)
 
       timestamps()
     end
-    create index(:accounts, [:customer_id])
     create index(:accounts, [:name], unique: true)
   end
 end

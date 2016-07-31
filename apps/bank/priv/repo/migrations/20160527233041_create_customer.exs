@@ -4,6 +4,7 @@ defmodule Bank.Repo.Migrations.CreateCustomer do
   def change do
     create table(:customers) do
       add :username, :string
+      add :wallet_id, references(:accounts, on_delete: :nothing)
 
       timestamps()
     end

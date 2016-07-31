@@ -4,8 +4,8 @@ defmodule Bank.LedgerTest do
   @moduletag isolation: :serializable
 
   setup _tags do
-    alice = Ledger.Account.build_wallet("alice") |> Repo.insert!
-    bob = Ledger.Account.build_wallet("bob") |> Repo.insert!
+    alice = Ledger.create_wallet!("alice")
+    bob = Ledger.create_wallet!("bob")
     {:ok, _} = Deposit.build(alice, ~M"100 USD") |> Ledger.write
 
     {:ok, %{alice: alice, bob: bob}}
