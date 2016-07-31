@@ -1,4 +1,10 @@
 defmodule Auth do
+  @moduledoc ~S"""
+  Authentication system for the platform.
+
+  See `register/1` for creating an account and `sign_in/2` for signing in.
+  """
+
   alias Auth.{Account, Repo}
   import Ecto.Changeset
 
