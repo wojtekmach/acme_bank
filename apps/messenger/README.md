@@ -13,6 +13,4 @@ In the future this could be extended to support:
 - failure handling using e.g. retrying with backoff, circuit breakers, fallback providers
 - analytics
 
-The idea is to show that messaging 
-
 See [`Messenger`](lib/messenger.ex) for docs.
