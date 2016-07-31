@@ -100,8 +100,9 @@ defmodule Bank.Ledger do
   end
 
   defp credits_equal_debits do
-    credits = Repo.one!(from(e in Entry, select: fragment("SUM((e0.amount).cents)"), where: e.type == "credit"))
-    debits  = Repo.one!(from(e in Entry, select: fragment("SUM((e0.amount).cents)"), where: e.type == "debit"))
+    q = from e in Entry, select: fragment("SUM((e0.amount).cents)")
+    credits = Repo.one!(from(e in q, where: e.type == "credit"))
+    debits  = Repo.one!(from(e in q, where: e.type == "debit"))
 
     if credits == debits do
       :ok
