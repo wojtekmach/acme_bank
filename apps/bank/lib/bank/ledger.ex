@@ -8,10 +8,12 @@ defmodule Bank.Ledger do
   - debit Alice's account for $10.00
   - credit Bob's account for $10.00
 
-  `Bank.Entry` can be a credit or a debit. Depending on `Bank.Account`'s type, a credit
-  can result in the increase (or decrease) of that accounts' balance. See `balance/1`.
+  `Bank.Entry` can be a credit or a debit. Depending on `Bank.Account`'s type,
+  a credit can result in the increase (or decrease) of that accounts' balance.
+  See `balance/1`.
 
-  Double-entry accounting system implementation is usually required for compliance with other financial institutions.
+  Double-entry accounting system implementation is usually required for
+  compliance with other financial institutions.
 
   See [Wikipedia entry for more information](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system#Debits_and_credits)
   """
