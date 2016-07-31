@@ -3,6 +3,7 @@ defmodule Bank.Customer do
 
   schema "customers" do
     field :username, :string
+    field :email, :string
 
     belongs_to :wallet, Ledger.Account
 
