@@ -4,7 +4,6 @@ defmodule BankWeb.TransferControllerTest do
   @moduletag isolation: :serializable
 
   setup do
-    :ok = Messenger.Test.setup()
     alice = Bank.create_customer!("alice")
     bob = Bank.create_customer!("bob")
     Bank.create_deposit!(alice, ~M"10 USD")
@@ -15,10 +14,13 @@ defmodule BankWeb.TransferControllerTest do
   end
 
   test "create: success", %{conn: conn} do
-    params = %{amount_string: "2.01", destination_username: "bob", description: "Lunch money"}
+    params = %{
+      amount_string: "2.01",
+      destination_username: "bob",
+      description: "Lunch money"
+    }
     conn = post conn, "/transfers", %{"transfer" => params}
     assert html_response(conn, 302)
-    assert Messenger.Test.subjects_for("bob") == ["You've received $2.01 from alice"]
   end
 
   test "create: invalid amount", %{conn: conn} do

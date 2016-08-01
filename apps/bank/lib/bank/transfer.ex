@@ -50,6 +50,7 @@ defmodule Bank.Transfer do
 
       case Ledger.write(transactions) do
         {:ok, _} ->
+          :ok = send_message(transfer)
           {:ok, transfer}
         {:error, :insufficient_funds} ->
           changeset = add_error(changeset, :amount_string, "insufficient funds")
@@ -65,5 +66,10 @@ defmodule Bank.Transfer do
       {:debit, source, description, amount},
       {:credit, destination, description, amount},
     ]
+  end
+
+  defp send_message(transfer) do
+    subject = "You've received #{transfer.amount} from #{transfer.source_customer.username}"
+    :ok = Messenger.deliver_email(transfer.destination_username, subject, subject)
   end
 end

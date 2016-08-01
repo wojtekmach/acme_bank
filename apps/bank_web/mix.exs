@@ -44,8 +44,7 @@ defmodule BankWeb.Mixfile do
      {:cowboy, "~> 1.0"},
      {:plug, github: "elixir-lang/plug", override: true},
 
-     {:bank, in_umbrella: true},
-     {:messenger, in_umbrella: true}]
+     {:bank, in_umbrella: true}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

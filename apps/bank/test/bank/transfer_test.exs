@@ -3,9 +3,15 @@ defmodule Bank.TransferTest do
 
   @moduletag isolation: :serializable
 
-  @valid_params %{amount_string: "2.01", destination_username: "bob", description: "Lunch money"}
+  @valid_params %{
+    amount_string: "2.01",
+    destination_username: "bob",
+    description: "Lunch money"
+  }
 
   setup do
+    :ok = Messenger.Test.setup()
+
     alice = Bank.create_customer!("alice")
     bob = Bank.create_customer!("bob")
     Bank.create_deposit!(alice, ~M"10 USD")
@@ -17,6 +23,8 @@ defmodule Bank.TransferTest do
     assert {:ok, _} = Transfer.create(alice, @valid_params)
     assert Ledger.balance(alice.wallet) == ~M"7.99 USD"
     assert Ledger.balance(bob.wallet) == ~M"2.01 USD"
+
+    assert Messenger.Test.subjects_for("bob") == ["You've received 2.01 USD from alice"]
   end
 
   test "create: invalid amount", %{alice: alice} do

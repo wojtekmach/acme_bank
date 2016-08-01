@@ -13,18 +13,11 @@ defmodule BankWeb.TransferController do
     customer = conn.assigns.current_customer
 
     case Bank.create_transfer(customer, transfer_params) do
-      {:ok, transfer} ->
-        send_message(transfer)
+      {:ok, _transfer} ->
         redirect conn, to: account_path(conn, :show)
       {:error, changeset} ->
         changeset = %{changeset | action: :transfer}
         render conn, "new.html", transfer: changeset
     end
-  end
-
-  defp send_message(transfer) do
-    amount = BankWeb.AccountView.format_money(transfer.amount)
-    subject = "You've received #{amount} from #{transfer.source_customer.username}"
-    :ok = Messenger.deliver_email(transfer.destination_username, subject, subject)
   end
 end
