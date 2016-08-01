@@ -44,7 +44,6 @@ defmodule BankWeb.Mixfile do
      {:cowboy, "~> 1.0"},
      {:plug, github: "elixir-lang/plug", override: true},
 
-     {:auth, in_umbrella: true},
      {:bank, in_umbrella: true},
      {:messenger, in_umbrella: true}]
   end
