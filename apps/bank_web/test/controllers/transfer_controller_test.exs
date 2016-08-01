@@ -4,6 +4,8 @@ defmodule BankWeb.TransferControllerTest do
   @moduletag isolation: :serializable
 
   setup do
+    :ok = Messenger.Test.setup()
+
     alice = Bank.create_customer!("alice")
     bob = Bank.create_customer!("bob")
     Bank.create_deposit!(alice, ~M"10 USD")
