@@ -45,7 +45,7 @@ defmodule Bank.Ledger do
   """
   def balance(%Account{id: id, type: type, currency: currency}) do
     q = from(t in Entry,
-             select: fragment("SUM(CASE WHEN e0.type = 'credit' THEN (e0.amount).cents ELSE -(e0.amount).cents END)"),
+             select: fragment("SUM(CASE WHEN b0.type = 'credit' THEN (b0.amount).cents ELSE -(b0.amount).cents END)"),
              where: t.account_id == ^id)
 
     balance = Repo.one(q) || 0
@@ -100,7 +100,7 @@ defmodule Bank.Ledger do
   end
 
   defp credits_equal_debits do
-    q = from e in Entry, select: fragment("SUM((e0.amount).cents)")
+    q = from e in Entry, select: fragment("SUM((b0.amount).cents)")
     credits = Repo.one!(from(e in q, where: e.type == "credit"))
     debits  = Repo.one!(from(e in q, where: e.type == "debit"))
 

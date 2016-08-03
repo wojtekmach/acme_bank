@@ -2,7 +2,7 @@ defmodule Auth.Account do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "accounts" do
+  schema "bank_accounts" do
     field :email, :string
     field :password_hash, :string
     field :password, :string, virtual: true

@@ -3,7 +3,7 @@ defmodule Bank.Ledger.Entry do
 
   @entry_types [:credit, :debit]
 
-  schema "entries" do
+  schema "bank_entries" do
     field :type, :string
     field :description, :string
     field :amount, Money.Ecto

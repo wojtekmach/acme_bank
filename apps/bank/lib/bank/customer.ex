@@ -1,7 +1,7 @@
 defmodule Bank.Customer do
   use Bank.Model
 
-  schema "customers" do
+  schema "bank_customers" do
     field :username, :string
     field :email, :string
     field :auth_account_id, :integer

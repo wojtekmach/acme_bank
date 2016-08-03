@@ -9,14 +9,14 @@ defmodule Bank.Repo.Migrations.CreateEntry do
     );
     """
 
-    create table(:entries) do
+    create table(:bank_entries) do
       add :type, :string
       add :description, :string
       add :amount, :moneyz
-      add :account_id, references(:accounts, on_delete: :nothing)
+      add :account_id, references(:bank_accounts, on_delete: :nothing)
 
       timestamps()
     end
-    create index(:entries, [:account_id])
+    create index(:bank_entries, [:account_id])
   end
 end

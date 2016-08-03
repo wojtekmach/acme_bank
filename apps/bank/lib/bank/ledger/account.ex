@@ -3,7 +3,7 @@ defmodule Bank.Ledger.Account do
 
   @account_types ~w(asset liability)
 
-  schema "accounts" do
+  schema "bank_accounts" do
     field :type, :string
     field :name, :string
     field :currency, :string
