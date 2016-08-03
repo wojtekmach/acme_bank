@@ -30,6 +30,9 @@ defmodule Bank.TransferTest do
   test "create: invalid amount", %{alice: alice} do
     assert {:error, %{errors: [amount_string: {"is invalid", _}]}} =
            Transfer.create(alice, %{@valid_params | amount_string: "invalid"})
+
+    assert {:error, %{errors: [amount_string: {"is invalid", _}]}} =
+           Transfer.create(alice, %{@valid_params | amount_string: "-2.00"})
   end
 
   test "create: insufficient funds", %{alice: alice} do

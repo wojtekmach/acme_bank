@@ -15,7 +15,7 @@ defmodule Bank.Transfer do
     struct
     |> cast(params, [:amount_string, :destination_username, :description])
     |> validate_required([:amount_string, :destination_username, :description])
-    |> validate_format(:amount_string, ~r/\d+\.\d{2}/, message: "is invalid")
+    |> validate_format(:amount_string, ~r/\A\d+\.\d{2}\Z/, message: "is invalid")
     |> put_embed(:source_customer, customer)
     |> put_destination_customer(customer)
   end
