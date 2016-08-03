@@ -10,17 +10,20 @@ defmodule Messenger.Test do
 
   def setup do
     File.rm_rf!(@root)
-    File.mkdir_p!(@root)
     :ok
   end
 
   def deliver_email(username, subject, body) do
+    File.mkdir_p!(@root)
+
     uniq_id = :erlang.unique_integer()
     File.write!("#{@root}/#{username}-#{uniq_id}", "#{subject}\n\n#{body}")
     :ok
   end
 
   def messages_for(username) do
+    File.mkdir_p!(@root)
+
     Path.wildcard("#{@root}/#{username}-*")
     |> Enum.map(fn path ->
       File.read!(path)
