@@ -8,12 +8,3 @@ config :bank_web, BankWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
-
-# Configure your database
-config :bank_web, Bank.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "bank_web_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
