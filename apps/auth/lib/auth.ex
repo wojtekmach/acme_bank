@@ -6,16 +6,10 @@ defmodule Auth do
   """
 
   alias Auth.{Account, Repo}
-  import Ecto.Changeset
 
   def register(params) do
-    changeset = Account.build(params)
-
-    if changeset.valid? do
-      Repo.insert(changeset)
-    else
-      {:error, changeset}
-    end
+    Account.build(params)
+    |> Repo.insert()
   end
 
   def sign_in(email, password) do
