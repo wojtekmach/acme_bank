@@ -13,6 +13,7 @@ See README of each application to learn more about what it does.
 ## Apps
 
 - [Auth](apps/auth)
+- [Backoffice](apps/backoffice)
 - [BankWeb](apps/bank_web)
 - [Bank](apps/bank)
 - [Messenger](apps/messenger)
