@@ -16,7 +16,7 @@ defmodule Bank do
 
   def register_customer(username, email, password) do
     Ecto.Multi.new
-    |> Ecto.Multi.insert(:customer, Customer.build(%{username: username}))
+    |> Ecto.Multi.insert(:customer, Customer.build(%{username: username, email: email}))
     |> Ecto.Multi.run(:account, fn _ ->
       Auth.register(%{email: email, password: password})
     end)
