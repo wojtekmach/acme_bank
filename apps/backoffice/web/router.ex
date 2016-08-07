@@ -11,7 +11,7 @@ defmodule Backoffice.Router do
 
   use ExAdmin.Router
 
-  scope "/", ExAdmin do
+  scope "/backoffice", ExAdmin do
     pipe_through :browser
     admin_routes
   end

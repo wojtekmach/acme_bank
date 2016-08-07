@@ -11,7 +11,8 @@ config :backoffice,
 
 # Configures the endpoint
 config :backoffice, Backoffice.Endpoint,
-  url: [host: "localhost"],
+  url: [host: "localhost", path: "/"],
+  static_url: [host: "localhost", path: "/backoffice"],
   secret_key_base: "oqP7+8kIDrpIetIPddC3hf7pmNxOZbTjqUpWkR6nsvJelI7kfR7bhaBE0PP9pdDa",
   render_errors: [view: Backoffice.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Backoffice.PubSub,
