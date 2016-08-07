@@ -19,8 +19,25 @@ in complexity and thus how important it is to keep it separate.
 - [Backoffice](apps/backoffice)
 - [BankWeb](apps/bank_web)
 - [Bank](apps/bank)
+- [MasterProxy](apps/master_proxy)
 - [Messenger](apps/messenger)
 - [Money](apps/money)
+
+## Setup
+
+    $ git clone git@github.com:wojtekmach/acme_bank
+    $ cd acme_bank
+    $ mix deps.get
+    $ mix ecto.setup
+    $ mix phoenix.server
+    $ open http://localhost:4000 # bank_web
+    $ open http://localhost:4001 # backoffice
+
+## Deployment
+
+Acme Bank can be deployed to Heroku, see the Heroku Deploy button at the beginning of the README.
+[MasterProxy](apps/master_proxy) is used as the main entry point to the application: it binds
+to the port exposed by Heroku, and forwards requests to web apps.
 
 ## License
 
