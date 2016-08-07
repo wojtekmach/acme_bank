@@ -33,4 +33,5 @@ config :ex_admin,
   modules: [
     Backoffice.ExAdmin.Dashboard,
     Backoffice.ExAdmin.Bank.Ledger.Account,
+    Backoffice.ExAdmin.Bank.Ledger.Entry,
   ]
