@@ -16,8 +16,6 @@ defmodule Backoffice.ModelCase do
 
   using do
     quote do
-      alias Backoffice.Repo
-
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
@@ -25,13 +23,7 @@ defmodule Backoffice.ModelCase do
     end
   end
 
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Backoffice.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Backoffice.Repo, {:shared, self()})
-    end
-
+  setup _tags do
     :ok
   end
 

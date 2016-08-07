@@ -30,7 +30,6 @@ defmodule Backoffice.Web do
     quote do
       use Phoenix.Controller
 
-      alias Backoffice.Repo
       import Ecto
       import Ecto.Query
 
@@ -58,17 +57,6 @@ defmodule Backoffice.Web do
   def router do
     quote do
       use Phoenix.Router
-    end
-  end
-
-  def channel do
-    quote do
-      use Phoenix.Channel
-
-      alias Backoffice.Repo
-      import Ecto
-      import Ecto.Query
-      import Backoffice.Gettext
     end
   end
 

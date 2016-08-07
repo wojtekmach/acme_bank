@@ -7,7 +7,7 @@ use Mix.Config
 
 # General application configuration
 config :backoffice,
-  ecto_repos: [Backoffice.Repo]
+  ecto_repos: []
 
 # Configures the endpoint
 config :backoffice, Backoffice.Endpoint,

@@ -14,7 +14,7 @@ defmodule Backoffice.ExAdmin.AuthAccount do
       column :email
     end
 
-    show account do
+    show _account do
       attributes_table do
         row :id
         row :email
