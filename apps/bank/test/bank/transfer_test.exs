@@ -12,8 +12,8 @@ defmodule Bank.TransferTest do
   setup do
     :ok = Messenger.Test.setup()
 
-    alice = Bank.create_customer!("alice")
-    bob = Bank.create_customer!("bob")
+    alice = Bank.create_customer!("alice", "alice@example.com")
+    bob = Bank.create_customer!("bob", "bob@example.com")
     Bank.create_deposit!(alice, ~M"10 USD")
 
     {:ok, %{alice: alice, bob: bob}}

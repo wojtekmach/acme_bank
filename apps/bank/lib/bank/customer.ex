@@ -16,13 +16,13 @@ defmodule Bank.Customer do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(username)a)
-    |> validate_required(~w(username)a)
+    |> cast(params, ~w(username email)a)
+    |> validate_required(~w(username email)a)
     |> unique_constraint(:username)
   end
 
-  def build(%{username: username}) do
-    changeset(%Customer{}, %{username: username})
+  def build(%{username: username} = params) do
+    changeset(%Customer{}, params)
     |> put_assoc(:wallet, Ledger.Account.build_wallet("Wallet: #{username}"))
   end
 end

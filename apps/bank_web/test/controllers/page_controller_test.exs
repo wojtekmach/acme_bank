@@ -2,7 +2,7 @@ defmodule BankWeb.PageControllerTest do
   use BankWeb.ConnCase
 
   setup do
-    Bank.create_customer!("alice")
+    Bank.create_customer!("alice", "alice@example.com")
     :ok
   end
 
