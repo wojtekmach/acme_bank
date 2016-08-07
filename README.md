@@ -23,6 +23,8 @@ in complexity and thus how important it is to keep it separate.
 - [Messenger](apps/messenger)
 - [Money](apps/money)
 
+![diagram](./diagram.png)
+
 ## Setup
 
     $ git clone git@github.com:wojtekmach/acme_bank
