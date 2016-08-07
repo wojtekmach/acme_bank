@@ -5,7 +5,7 @@ config :auth, Auth.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
-  database: "auth_#{Mix.env}",
+  database: "bank_platform_#{Mix.env}",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
