@@ -7,7 +7,7 @@
   "decimal": {:hex, :decimal, "1.1.2", "79a769d4657b2d537b51ef3c02d29ab7141d2b486b516c109642d453ee08e00c", [:mix], []},
   "earmark": {:hex, :earmark, "1.0.1", "2c2cd903bfdc3de3f189bd9a8d4569a075b88a8981ded9a0d95672f6e2b63141", [:mix], []},
   "ecto": {:hex, :ecto, "2.0.3", "3d416156e0b7578a31b6925ee07de76b53684ffb4f106b863e35b423b1004b08", [:mix], [{:db_connection, "~> 1.0-rc.2", [hex: :db_connection, optional: true]}, {:decimal, "~> 1.0", [hex: :decimal, optional: false]}, {:mariaex, "~> 0.7.7", [hex: :mariaex, optional: true]}, {:poison, "~> 1.5 or ~> 2.0", [hex: :poison, optional: true]}, {:poolboy, "~> 1.5", [hex: :poolboy, optional: false]}, {:postgrex, "~> 0.11.2", [hex: :postgrex, optional: true]}, {:sbroker, "~> 1.0-beta", [hex: :sbroker, optional: true]}]},
-  "ex_admin": {:git, "https://github.com/smpallen99/ex_admin.git", "2e67c6113bf3c0b1e51ee9f7ce29d09646664913", []},
+  "ex_admin": {:git, "https://github.com/wojtekmach/ex_admin.git", "5912810cfd048df6cf483ffeccf4c05355a2cb5e", [branch: "wm-customize-resource-name"]},
   "ex_doc": {:hex, :ex_doc, "0.13.0", "aa2f8fe4c6136a2f7cfc0a7e06805f82530e91df00e2bff4b4362002b43ada65", [:mix], [{:earmark, "~> 1.0", [hex: :earmark, optional: false]}]},
   "ex_queb": {:git, "https://github.com/E-MetroTel/ex_queb.git", "7834a64c38be30d4dd27db91d8c9cd771604b839", []},
   "exactor": {:hex, :exactor, "2.2.1", "89bc6798f7ed5b5a090f8e4a0b6997478a3266e831d2ff31677ac764ffa75973", [:mix], []},

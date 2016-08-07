@@ -43,7 +43,7 @@ defmodule Backoffice.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:plug, github: "elixir-lang/plug", override: true},
-     {:ex_admin, github: "smpallen99/ex_admin"},
+     {:ex_admin, github: "wojtekmach/ex_admin", branch: "wm-customize-resource-name"},
      {:ex_queb, github: "E-MetroTel/ex_queb", override: true},
 
      {:bank, in_umbrella: true},

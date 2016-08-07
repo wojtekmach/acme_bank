@@ -1,0 +1,36 @@
+defmodule Backoffice.ExAdmin.AuthAccount do
+  use ExAdmin.Register
+
+  alias Auth.Account, as: AuthAccount
+
+  register_resource AuthAccount do
+    menu label: "Auth Accounts"
+    options resource_name: "auth_account", controller_route: "auth_accounts"
+
+    filter [:id, :email]
+
+    index do
+      column :id
+      column :email
+    end
+
+    show account do
+      attributes_table do
+        row :id
+        row :email
+        row :inserted_at
+        row :updated_at
+      end
+    end
+
+    form account do
+      inputs do
+        input account, :email
+
+        unless account.id do
+          input account, :password
+        end
+      end
+    end
+  end
+end
