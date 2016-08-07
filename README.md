@@ -8,7 +8,10 @@
 Acme Bank is an example project to explore and experiment with building modular and maintainable Elixir/Phoenix applications.
 
 The "platform" is built as an Elixir umbrella project - a collection of smaller and independent OTP applications.
-See README of each application to learn more about what it does.
+
+See README of each application to learn more about what it does. Most apps contain a "wishlist" of features that might
+makes sense for that app. The idea is not to implement these features but to show how each particular app can grow
+in complexity and thus how important it is to keep it separate.
 
 ## Apps
 
