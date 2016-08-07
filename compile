@@ -1,0 +1,9 @@
+# apps/bank_web (default)
+brunch build --production
+mix phoenix.digest
+
+# apps/backoffice
+cd ../backoffice
+npm install
+brunch build --production
+mix phoenix.digest
