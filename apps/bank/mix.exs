@@ -31,6 +31,7 @@ defmodule Bank.Mixfile do
   defp deps do
     [{:ecto, "~> 2.0"},
      {:postgrex, ">= 0.0.0"},
+     {:scrivener_ecto, github: "drewolson/scrivener_ecto"},
 
      {:ex_doc, ">= 0.0.0", docs: true},
 

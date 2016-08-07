@@ -2,6 +2,7 @@ defmodule Bank.Repo do
   @moduledoc false
 
   use Ecto.Repo, otp_app: :bank
+  use Scrivener, page_size: 10
 
   def transaction_with_isolation(fun_or_multi, opts) do
     false = Bank.Repo.in_transaction?

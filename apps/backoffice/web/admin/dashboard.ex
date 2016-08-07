@@ -1,3 +1,7 @@
+defimpl ExAdmin.Render, for: Money do
+  defdelegate to_string(money), to: Money
+end
+
 defmodule Backoffice.ExAdmin.Dashboard do
   use ExAdmin.Register
 

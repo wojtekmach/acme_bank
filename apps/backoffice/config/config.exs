@@ -28,8 +28,9 @@ import_config "#{Mix.env}.exs"
 config :xain, :after_callback, {Phoenix.HTML, :raw}
 
 config :ex_admin,
-	repo: Backoffice.Repo,
-	module: Backoffice,
-	modules: [
-		Backoffice.ExAdmin.Dashboard,
-	]
+  repo: Bank.Repo,
+  module: Backoffice,
+  modules: [
+    Backoffice.ExAdmin.Dashboard,
+    Backoffice.ExAdmin.Bank.Ledger.Account,
+  ]
