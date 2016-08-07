@@ -4,7 +4,8 @@ defmodule MasterProxy do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    cowboy = Plug.Adapters.Cowboy.child_spec(:http, MasterProxy.Plug, [], [port: 3333])
+    port = System.get_env("PORT") |> String.to_integer
+    cowboy = Plug.Adapters.Cowboy.child_spec(:http, MasterProxy.Plug, [], [port: port])
 
     children = [
       cowboy

@@ -17,7 +17,7 @@ use Mix.Config
 #   cache_static_manifest: "priv/static/manifest.json"
 
 config :bank_web, BankWeb.Endpoint,
-  http: [port: {:system, "PORT"}],
+  # http: [port: {:system, "PORT"}],
   url: [scheme: "https", host: "acme-bank.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/manifest.json",
