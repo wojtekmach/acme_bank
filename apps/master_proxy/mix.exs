@@ -20,7 +20,7 @@ defmodule MasterProxy.Mixfile do
   end
 
   defp deps do
-    [{:plug, github: "elixir-lang/plug", override: true},
+    [{:plug, "~> 1.2"},
      {:cowboy, "~> 1.0"},
 
      {:bank_web, in_umbrella: true},

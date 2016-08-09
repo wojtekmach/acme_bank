@@ -35,7 +35,6 @@ defmodule Backoffice.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:plug, github: "elixir-lang/plug", override: true},
      {:ex_admin, github: "wojtekmach/ex_admin", branch: "wm-customize-resource-name"},
      {:ex_queb, github: "E-MetroTel/ex_queb", override: true},
 
