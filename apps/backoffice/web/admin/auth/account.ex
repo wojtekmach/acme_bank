@@ -1,9 +1,7 @@
 defmodule Backoffice.ExAdmin.AuthAccount do
   use ExAdmin.Register
 
-  alias Auth.Account, as: AuthAccount
-
-  register_resource AuthAccount do
+  register_resource Auth.Account do
     menu label: "Auth Accounts"
     options resource_name: "auth_account", controller_route: "auth_accounts"
 
