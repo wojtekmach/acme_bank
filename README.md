@@ -32,8 +32,8 @@ in complexity and thus how important it is to keep it separate.
     $ mix deps.get
     $ mix ecto.setup
     $ mix phoenix.server
-    $ open http://localhost:4000 # bank_web
-    $ open http://localhost:4001 # backoffice
+    $ open http://localhost:4000
+    $ open http://localhost:4001/backoffice
 
 ## Deployment
 
