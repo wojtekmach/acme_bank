@@ -10,7 +10,7 @@ defmodule Bank do
   ## Customers
 
   def create_customer!(username, email) do
-    Customer.build(%{username: username, email: email})
+    Bank.Customer.build(%{username: username, email: email})
     |> Repo.insert!
   end
 
@@ -47,8 +47,15 @@ defmodule Bank do
 
   ## Ledger
 
-  defdelegate balance(account), to: Ledger
-  defdelegate transactions(account), to: Ledger, as: :entries
+  @doc ~S"""
+  Returns balance of the customer's wallet account
+  """
+  def balance(%Customer{wallet: wallet}), do: Ledger.balance(wallet)
+
+  @doc ~S"""
+  Returns transactions of the customer's wallet account.
+  """
+  def transactions(%Customer{wallet: wallet}), do: Ledger.entries(wallet)
 
   ## Transfers
 
