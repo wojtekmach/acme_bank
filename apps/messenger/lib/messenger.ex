@@ -11,7 +11,11 @@ defmodule Messenger do
 
   @callback deliver_email(email, subject, body) :: :ok
 
-  @impl Application.get_env(:messenger, :adapter)
+  def deliver_email(email, subject, body) do
+    adapter.deliver_email(email, subject, body)
+  end
 
-  defdelegate deliver_email(email, subject, body), to: @impl
+  defp adapter do
+    Application.get_env(:messenger, :adapter)
+  end
 end
