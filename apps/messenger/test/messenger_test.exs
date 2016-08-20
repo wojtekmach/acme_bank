@@ -3,7 +3,7 @@ defmodule MessengerTest do
   doctest Messenger
 
   setup do
-    :ok = Messenger.Test.setup()
+    :ok = Messenger.Local.setup()
     :ok
   end
 
@@ -12,14 +12,14 @@ defmodule MessengerTest do
     :ok = Messenger.deliver_email("alice", "subject 2", "body 2")
     :ok = Messenger.deliver_email("bob", "subject 3", "body 3")
     
-    assert Messenger.Test.subjects_for("alice") == ["subject 2", "subject 1"]
-    assert Messenger.Test.messages_for("alice") == [
+    assert Messenger.Local.subjects_for("alice") == ["subject 2", "subject 1"]
+    assert Messenger.Local.messages_for("alice") == [
       {"subject 2", "body 2"},
       {"subject 1", "body 1"},
     ]
 
-    assert Messenger.Test.subjects_for("bob") == ["subject 3"]
-    assert Messenger.Test.messages_for("bob") == [
+    assert Messenger.Local.subjects_for("bob") == ["subject 3"]
+    assert Messenger.Local.messages_for("bob") == [
       {"subject 3", "body 3"},
     ]
   end

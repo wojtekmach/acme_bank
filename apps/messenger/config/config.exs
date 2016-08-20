@@ -1,3 +1,3 @@
 use Mix.Config
 
-config :messenger, adapter: Messenger.Test
+config :messenger, adapter: Messenger.Local

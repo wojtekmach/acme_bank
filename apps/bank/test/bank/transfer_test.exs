@@ -10,7 +10,7 @@ defmodule Bank.TransferTest do
   }
 
   setup do
-    :ok = Messenger.Test.setup()
+    :ok = Messenger.Local.setup()
 
     alice = Bank.create_customer!("alice", "alice@example.com")
     bob = Bank.create_customer!("bob", "bob@example.com")
@@ -24,7 +24,7 @@ defmodule Bank.TransferTest do
     assert Ledger.balance(alice.wallet) == ~M"7.99 USD"
     assert Ledger.balance(bob.wallet) == ~M"2.01 USD"
 
-    assert Messenger.Test.subjects_for("bob") == ["You've received 2.01 USD from alice"]
+    assert Messenger.Local.subjects_for("bob") == ["You've received 2.01 USD from alice"]
   end
 
   test "create: invalid amount", %{alice: alice} do

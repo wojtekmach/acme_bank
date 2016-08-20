@@ -1,4 +1,4 @@
-defmodule Messenger.Test do
+defmodule Messenger.Local do
   @moduledoc ~S"""
   Test adapter for `Messenger`.
 

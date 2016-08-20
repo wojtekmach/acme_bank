@@ -4,8 +4,8 @@ defmodule Messenger do
 
   Available adapters:
 
+  - `Messenger.Local`
   - `Messenger.Logger`
-  - `Messenger.Test`
   """
 
   @type email    :: String.t
