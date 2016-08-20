@@ -2,7 +2,10 @@ defmodule Messenger do
   @moduledoc ~S"""
   Messenger delivers messages.
 
-  For now only `Messenger.Test` adapter is available.
+  Available adapters:
+
+  - `Messenger.Logger`
+  - `Messenger.Test`
   """
 
   @type email    :: String.t
