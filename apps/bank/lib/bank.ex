@@ -10,7 +10,7 @@ defmodule Bank do
   ## Customers
 
   def create_customer!(username, email) do
-    Bank.Customer.build(%{username: username, email: email})
+    Customer.build(%{username: username, email: email})
     |> Repo.insert!
   end
 

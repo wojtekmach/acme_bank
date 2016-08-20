@@ -4,17 +4,15 @@ defmodule BankWeb.AccountControllerTest do
   @moduletag isolation: :serializable
 
   test "show", %{conn: conn} do
-    alice = Bank.create_customer!("alice", "alice@example.com")
+    {:ok, %{customer: alice}} = Bank.register_customer("alice", "alice@example.com", "secret12")
     Bank.create_deposit!(alice, ~M"10 USD")
 
-    conn = conn |> assign(:current_customer, alice)
+    conn = post conn, "/sign_in", %{session: %{email: "alice@example.com", password: "secret12"}}
 
     conn = get conn, "/account"
     assert conn.status == 200
     assert conn.resp_body =~ "<h2>Account balance</h2>\n\n$10.00"
     assert conn.resp_body =~ "Deposit"
-
-    # TODO: allow custom deposit description and assert it here
   end
 
   test "unauthenticated", %{conn: conn} do
