@@ -36,6 +36,8 @@ defmodule BankWeb.Web do
 
       import BankWeb.Router.Helpers
       import BankWeb.Gettext
+
+      import BankWeb.Authentication, only: [require_authenticated: 2]
     end
   end
 

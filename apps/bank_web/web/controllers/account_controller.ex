@@ -1,7 +1,6 @@
 defmodule BankWeb.AccountController do
   use BankWeb.Web, :controller
-
-  plug BankWeb.Authentication.Require
+  plug :require_authenticated
 
   def show(conn, _params) do
     customer = conn.assigns.current_customer
