@@ -6,7 +6,7 @@ defmodule MasterProxy.Plug do
   end
 
   def call(conn, _opts) do
-		cond do
+    cond do
       conn.request_path =~ ~r{/backoffice} ->
         Backoffice.Endpoint.call(conn, [])
       true ->
