@@ -32,6 +32,8 @@ in complexity and thus how important it is to keep it separate.
     $ cd acme_bank
     $ mix deps.get
     $ mix ecto.setup
+    $ (cd apps/bank_web && npm install)
+    $ (cd apps/backoffice && npm install)
     $ mix phoenix.server
     $ open http://localhost:4000
     $ open http://localhost:4001/backoffice
