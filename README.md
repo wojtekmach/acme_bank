@@ -28,7 +28,7 @@ in complexity and thus how important it is to keep it separate.
 
 ## Setup
 
-    $ git clone git@github.com:wojtekmach/acme_bank
+    $ git clone https://github.com/wojtekmach/acme_bank
     $ cd acme_bank
     $ mix deps.get
     $ mix ecto.setup
