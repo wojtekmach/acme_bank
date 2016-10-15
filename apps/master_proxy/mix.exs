@@ -16,7 +16,7 @@ defmodule MasterProxy.Mixfile do
 
   def application do
     [applications: [:logger, :cowboy, :plug, :bank_web, :backoffice],
-     mod: {MasterProxy, []}]
+     mod: {MasterProxy.Application, []}]
   end
 
   defp deps do
