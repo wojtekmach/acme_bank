@@ -18,7 +18,7 @@ defmodule Backoffice.Mixfile do
   end
 
   def application do
-    [mod: {Backoffice, []},
+    [mod: {Backoffice.Application, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex, :bank]]
   end
