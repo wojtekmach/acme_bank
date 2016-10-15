@@ -2,6 +2,8 @@ defmodule Bank do
   @moduledoc ~S"""
   Contains main business logic of the project.
 
+  `Bank` is used by `BankWeb` and `Backoffice` Phoenix apps.
+
   See `Bank.Ledger` for a double-entry accounting system implementation.
   """
 

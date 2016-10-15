@@ -21,6 +21,6 @@ defmodule Messenger.Mixfile do
   end
 
   defp deps do
-    [{:ex_doc, ">= 0.0.0", docs: true}]
+    []
   end
 end

@@ -9,6 +9,6 @@ end
 dep = Enum.at(deps, -1)
 
 Mix.Utils.print_tree([dep], fn dep -> fun.(dep, deps) end)
-Mix.Utils.write_dot_graph!("diagram.dot", "deps", [dep], fn dep -> fun.(dep, deps) end)
+Mix.Utils.write_dot_graph!("tmp/diagram.dot", "deps", [dep], fn dep -> fun.(dep, deps) end)
 
-System.cmd("dot", ["-Tpng", "diagram.dot", "-odiagram.png"])
+System.cmd("dot", ["-Tpng", "tmp/diagram.dot", "-odocs/diagram.png"])

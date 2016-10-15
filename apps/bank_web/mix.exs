@@ -13,6 +13,7 @@ defmodule BankWeb.Mixfile do
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     docs: [main: "readme", extras: ["README.md"]],
      aliases: aliases(),
      deps: deps()]
   end

@@ -23,8 +23,6 @@ defmodule Auth.Mixfile do
   defp deps do
     [{:ecto, "~> 2.0"},
      {:postgrex, ">= 0.0.0"},
-     {:comeonin, "~> 2.5"},
-
-     {:ex_doc, ">= 0.0.0", docs: true}]
+     {:comeonin, "~> 2.5"}]
   end
 end

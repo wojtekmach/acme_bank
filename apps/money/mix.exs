@@ -22,7 +22,6 @@ defmodule Money.Mixfile do
   defp deps do
     [{:ecto, "~> 2.0", optional: true},
      {:phoenix_html, "~> 2.6", optional: true},
-     {:plug, "~> 1.2", optional: true},
-     {:ex_doc, ">= 0.0.0", docs: true}]
+     {:plug, "~> 1.2", optional: true}]
   end
 end

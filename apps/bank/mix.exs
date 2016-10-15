@@ -33,8 +33,6 @@ defmodule Bank.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:scrivener_ecto, github: "drewolson/scrivener_ecto"},
 
-     {:ex_doc, ">= 0.0.0", docs: true},
-
      {:auth, in_umbrella: true},
      {:messenger, in_umbrella: true},
      {:money, in_umbrella: true}]
