@@ -2,6 +2,8 @@
 
 Web interface to the platform.
 
+See `Bank` for the main business logic.
+
 ## Setup
 
 To start your Phoenix app:

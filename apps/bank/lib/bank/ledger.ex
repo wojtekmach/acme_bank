@@ -2,13 +2,13 @@ defmodule Bank.Ledger do
   @moduledoc ~S"""
   A simple implementation of double-entry accounting system.
 
-  Basically, we store every `Bank.Entry` twice - once for each account affected.
+  Basically, we store every `Bank.Ledger.Entry` twice - once for each account affected.
   Thus, if Alice transfers $10.00 to Bob  we'll have two entries:
 
   - debit Alice's account for $10.00
   - credit Bob's account for $10.00
 
-  `Bank.Entry` can be a credit or a debit. Depending on `Bank.Account`'s type,
+  `Bank.Ledger.Entry` can be a credit or a debit. Depending on `Bank.Ledger.Account`'s type,
   a credit can result in the increase (or decrease) of that accounts' balance.
   See `balance/1`.
 
@@ -31,7 +31,7 @@ defmodule Bank.Ledger do
   end
 
   @doc ~S"""
-  Returns account's balance.
+  Returns account's balance as `Money`.
   
   We calculate balance over all account's entry.
   Balance increases or decreases are based on `Bank.Account`'s type
