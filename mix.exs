@@ -14,7 +14,7 @@ defmodule BankPlatform.Mixfile do
   end
 
   defp deps do
-    [{:ex_doc, github: "wojtekmach/ex_doc", branch: "wm-umbrella", only: :dev}]
+    [{:ex_doc, github: "elixir-lang/ex_doc", branch: "master", only: :dev}]
   end
 
   defp aliases do
