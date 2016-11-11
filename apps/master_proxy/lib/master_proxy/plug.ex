@@ -1,6 +1,4 @@
 defmodule MasterProxy.Plug do
-  import Plug.Conn
-
   def init(options) do
     options
   end
