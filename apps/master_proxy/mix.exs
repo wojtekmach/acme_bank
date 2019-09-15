@@ -15,14 +15,12 @@ defmodule MasterProxy.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :cowboy, :plug, :bank_web, :backoffice],
+    [applications: [:logger, :plug_cowboy, :bank_web, :backoffice],
      mod: {MasterProxy.Application, []}]
   end
 
   defp deps do
-    [{:plug, "~> 1.2"},
-     {:cowboy, "~> 1.0"},
-
+    [{:plug_cowboy, "~> 1.0"},
      {:bank_web, in_umbrella: true},
      {:backoffice, in_umbrella: true}]
   end
